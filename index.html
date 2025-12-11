@@ -541,11 +541,12 @@ function cargarRankingGlobal(){
   db.collection("ranking")
   .orderBy("tiempo_total","asc")
   .limit(30)
-  .onSnapshot(snap=>{
-    if(snap.empty)return showModal("🌍 No hay datos.");
-    let html="",pos=1;
+  .get().then(snap=>{
+    if(snap.empty) return showModal("🌍 No hay datos.");
+
+    let html="", pos=1;
     snap.forEach(doc=>{
-      const d=doc.data();
+      const d = doc.data();
       html+=`
         <div class="leader-row">
           <div>${pos}. <strong>${esc(d.nombre)}</strong></div>
@@ -556,15 +557,17 @@ function cargarRankingGlobal(){
         </div>`;
       pos++;
     });
-    modalMessage.innerHTML=`
+
+    modalMessage.innerHTML = `
       <h3>🌍 Ranking Global</h3>
       <div style="margin-top:12px;max-height:300px;overflow-y:auto;">${html}</div>
     `;
     modalCancel.classList.add("hidden");
     modalOverlay.classList.remove("hidden");
-    modalOk.onclick=()=>modalOverlay.classList.add("hidden");
+    modalOk.onclick = () => modalOverlay.classList.add("hidden");
   });
 }
+
 btnGlobalRank.onclick=cargarRankingGlobal;
 
 /* Tema */
