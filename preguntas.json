@@ -1,0 +1,1508 @@
+{
+    "basico": [
+        {
+            "pregunta": "Translate: 'Gato'",
+            "opciones": [
+                "Dog",
+                "Cat",
+                "Bird",
+                "Fish"
+            ],
+            "respuesta": "Cat"
+        },
+        {
+            "pregunta": "Translate: 'Libro'",
+            "opciones": [
+                "Pen",
+                "Notebook",
+                "Book",
+                "Chair"
+            ],
+            "respuesta": "Book"
+        },
+        {
+            "pregunta": "Elige el artículo correcto: ___ apple.",
+            "opciones": [
+                "A",
+                "An",
+                "The",
+                "Some"
+            ],
+            "respuesta": "An"
+        },
+        {
+            "pregunta": "Completa la frase: 'I ___ happy.'",
+            "opciones": [
+                "am",
+                "is",
+                "are",
+                "be"
+            ],
+            "respuesta": "am"
+        },
+        {
+            "pregunta": "Plural de 'car':",
+            "opciones": [
+                "cars",
+                "caries",
+                "car's",
+                "cares"
+            ],
+            "respuesta": "cars"
+        },
+        {
+            "pregunta": "¿Qué hora es? (4:00 PM)",
+            "opciones": [
+                "It's four o'clock.",
+                "It's four past PM.",
+                "It's four in the afternoon.",
+                "It's four to."
+            ],
+            "respuesta": "It's four o'clock."
+        },
+        {
+            "pregunta": "Translate: 'Azul'",
+            "opciones": [
+                "Red",
+                "Yellow",
+                "Green",
+                "Blue"
+            ],
+            "respuesta": "Blue"
+        },
+        {
+            "pregunta": "Completa la pregunta: '___ is your name?'",
+            "opciones": [
+                "Where",
+                "What",
+                "When",
+                "Who"
+            ],
+            "respuesta": "What"
+        },
+        {
+            "pregunta": "Opuesto de 'big':",
+            "opciones": [
+                "Large",
+                "Small",
+                "Tall",
+                "Heavy"
+            ],
+            "respuesta": "Small"
+        },
+        {
+            "pregunta": "Verbo en presente simple para 'She': She ___ (eat) an apple.",
+            "opciones": [
+                "eat",
+                "eats",
+                "eating",
+                "ate"
+            ],
+            "respuesta": "eats"
+        },
+        {
+            "pregunta": "Translate: 'Familia'",
+            "opciones": [
+                "Friends",
+                "People",
+                "Family",
+                "Group"
+            ],
+            "respuesta": "Family"
+        },
+        {
+            "pregunta": "Elige la preposición correcta: The book is ___ the table.",
+            "opciones": [
+                "in",
+                "at",
+                "on",
+                "under"
+            ],
+            "respuesta": "on"
+        },
+        {
+            "pregunta": "Pasado simple de 'go':",
+            "opciones": [
+                "goed",
+                "gone",
+                "went",
+                "going"
+            ],
+            "respuesta": "went"
+        },
+        {
+            "pregunta": "Translate: 'Mañana' (siguiente día)",
+            "opciones": [
+                "Yesterday",
+                "Tonight",
+                "Tomorrow",
+                "Now"
+            ],
+            "respuesta": "Tomorrow"
+        },
+        {
+            "pregunta": "¿Cuál es el número 12?",
+            "opciones": [
+                "Eleven",
+                "Twelve",
+                "Thirteen",
+                "Twenty"
+            ],
+            "respuesta": "Twelve"
+        },
+        {
+            "pregunta": "Completa con un pronombre objeto: I see ___ (ella).",
+            "opciones": [
+                "she",
+                "her",
+                "his",
+                "it"
+            ],
+            "respuesta": "her"
+        },
+        {
+            "pregunta": "Translate: 'Tengo sed'",
+            "opciones": [
+                "I am hungry",
+                "I am cold",
+                "I am thirsty",
+                "I am tired"
+            ],
+            "respuesta": "I am thirsty"
+        },
+        {
+            "pregunta": "Elige la forma correcta del posesivo: This is ___ car (de él).",
+            "opciones": [
+                "he",
+                "him",
+                "his",
+                "her"
+            ],
+            "respuesta": "his"
+        },
+        {
+            "pregunta": "Día de la semana después de Tuesday:",
+            "opciones": [
+                "Monday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "respuesta": "Wednesday"
+        },
+        {
+            "pregunta": "¿Qué significa 'Hello'?",
+            "opciones": [
+                "Adiós",
+                "Por favor",
+                "Hola",
+                "Gracias"
+            ],
+            "respuesta": "Hola"
+        },
+        {
+            "pregunta": "Completa: 'We ___ students.'",
+            "opciones": [
+                "am",
+                "is",
+                "are",
+                "be"
+            ],
+            "respuesta": "are"
+        },
+        {
+            "pregunta": "Translate: 'Zapatos'",
+            "opciones": [
+                "Socks",
+                "Pants",
+                "Shoes",
+                "Hat"
+            ],
+            "respuesta": "Shoes"
+        },
+        {
+            "pregunta": "¿Cuál es la respuesta a 'How old are you?'",
+            "opciones": [
+                "I am fine.",
+                "I am twelve years old.",
+                "I live in New York.",
+                "I like pizza."
+            ],
+            "respuesta": "I am twelve years old."
+        },
+        {
+            "pregunta": "Elige la palabra para 'clima':",
+            "opciones": [
+                "Time",
+                "Weather",
+                "Water",
+                "Cloud"
+            ],
+            "respuesta": "Weather"
+        },
+        {
+            "pregunta": "Translate: 'Comer'",
+            "opciones": [
+                "Drink",
+                "Sleep",
+                "Walk",
+                "Eat"
+            ],
+            "respuesta": "Eat"
+        },
+        {
+            "pregunta": "Contracción de 'do not':",
+            "opciones": [
+                "don't",
+                "do'nt",
+                "does't",
+                "donot"
+            ],
+            "respuesta": "don't"
+        },
+        {
+            "pregunta": "Completa: 'Can ___ help me?'",
+            "opciones": [
+                "I",
+                "you",
+                "we",
+                "they"
+            ],
+            "respuesta": "you"
+        },
+        {
+            "pregunta": "Opuesto de 'hot':",
+            "opciones": [
+                "Warm",
+                "Cold",
+                "Boiling",
+                "Free"
+            ],
+            "respuesta": "Cold"
+        },
+        {
+            "pregunta": "Translate: 'Uno'",
+            "opciones": [
+                "Zero",
+                "One",
+                "Two",
+                "Ten"
+            ],
+            "respuesta": "One"
+        },
+        {
+            "pregunta": "Elige la forma correcta: 'He ___ a bike.'",
+            "opciones": [
+                "have",
+                "has",
+                "having",
+                "had"
+            ],
+            "respuesta": "has"
+        },
+        {
+            "pregunta": "Color de la hierba:",
+            "opciones": [
+                "Red",
+                "Black",
+                "Green",
+                "White"
+            ],
+            "respuesta": "Green"
+        },
+        {
+            "pregunta": "Translate: 'Escuela'",
+            "opciones": [
+                "Home",
+                "Park",
+                "Work",
+                "School"
+            ],
+            "respuesta": "School"
+        },
+        {
+            "pregunta": "Pregunta con 'Where':",
+            "opciones": [
+                "What is your hobby?",
+                "How are you?",
+                "Where do you work?",
+                "When is the party?"
+            ],
+            "respuesta": "Where do you work?"
+        },
+        {
+            "pregunta": "Plural de 'child':",
+            "opciones": [
+                "childs",
+                "children",
+                "child's",
+                "childen"
+            ],
+            "respuesta": "children"
+        },
+        {
+            "pregunta": "Translate: 'Gracias'",
+            "opciones": [
+                "Excuse me",
+                "Please",
+                "Sorry",
+                "Thank you"
+            ],
+            "respuesta": "Thank you"
+        },
+        {
+            "pregunta": "Completa: 'I like ___ (nadar).'",
+            "opciones": [
+                "swim",
+                "swimming",
+                "swims",
+                "swam"
+            ],
+            "respuesta": "swimming"
+        },
+        {
+            "pregunta": "Opuesto de 'old' (para cosas):",
+            "opciones": [
+                "Young",
+                "New",
+                "Aged",
+                "Antique"
+            ],
+            "respuesta": "New"
+        },
+        {
+            "pregunta": "Elige el adjetivo posesivo correcto: ___ mother is a doctor (de nosotros).",
+            "opciones": [
+                "My",
+                "Your",
+                "Our",
+                "Their"
+            ],
+            "respuesta": "Our"
+        },
+        {
+            "pregunta": "Pasado simple de 'see':",
+            "opciones": [
+                "seed",
+                "saw",
+                "seen",
+                "seeing"
+            ],
+            "respuesta": "saw"
+        },
+        {
+            "pregunta": "¿Qué es un 'friend'?",
+            "opciones": [
+                "Enemigo",
+                "Pariente",
+                "Amigo",
+                "Vecino"
+            ],
+            "respuesta": "Amigo"
+        },
+        {
+            "pregunta": "Completa: 'There ___ two books on the desk.'",
+            "opciones": [
+                "is",
+                "are",
+                "be",
+                "was"
+            ],
+            "respuesta": "are"
+        },
+        {
+            "pregunta": "Translate: 'Tren'",
+            "opciones": [
+                "Plane",
+                "Bus",
+                "Boat",
+                "Train"
+            ],
+            "respuesta": "Train"
+        },
+        {
+            "pregunta": "Elige el adverbio: 'She walks ___.'",
+            "opciones": [
+                "Quick",
+                "Quickly",
+                "Fast",
+                "Good"
+            ],
+            "respuesta": "Quickly"
+        },
+        {
+            "pregunta": "¿Qué significa 'Goodbye'?",
+            "opciones": [
+                "Hola",
+                "Hasta luego",
+                "Perdón",
+                "Bienvenido"
+            ],
+            "respuesta": "Hasta luego"
+        },
+        {
+            "pregunta": "Completa la frase negativa: 'I ___ have a car.'",
+            "opciones": [
+                "not",
+                "don't",
+                "am not",
+                "doesn't"
+            ],
+            "respuesta": "don't"
+        },
+        {
+            "pregunta": "Translate: 'Rojo'",
+            "opciones": [
+                "Blue",
+                "Red",
+                "Black",
+                "White"
+            ],
+            "respuesta": "Red"
+        },
+        {
+            "pregunta": "Uso de 'can' (habilidad):",
+            "opciones": [
+                "I can fly.",
+                "I can be happy.",
+                "I can call you later.",
+                "I can be late."
+            ],
+            "respuesta": "I can fly."
+        },
+        {
+            "pregunta": "Opuesto de 'up':",
+            "opciones": [
+                "In",
+                "Down",
+                "On",
+                "Off"
+            ],
+            "respuesta": "Down"
+        },
+        {
+            "pregunta": "Elige la preposición de tiempo correcta: The meeting is ___ 7 PM.",
+            "opciones": [
+                "on",
+                "in",
+                "at",
+                "for"
+            ],
+            "respuesta": "at"
+        },
+        {
+            "pregunta": "Translate: 'Dinero'",
+            "opciones": [
+                "Credit",
+                "Bank",
+                "Money",
+                "Wallet"
+            ],
+            "respuesta": "Money"
+        }
+    ],
+    "medio": [
+        {
+            "pregunta": "Translate: 'Oportunidad'",
+            "opciones": [
+                "Chance",
+                "Wish",
+                "Aim",
+                "Goal"
+            ],
+            "respuesta": "Chance"
+        },
+        {
+            "pregunta": "Elige el verbo en Presente Continuo: 'They ___ (study) for the test now.'",
+            "opciones": [
+                "study",
+                "are studying",
+                "studies",
+                "is studying"
+            ],
+            "respuesta": "are studying"
+        },
+        {
+            "pregunta": "¿Cuándo usas 'Much'?",
+            "opciones": [
+                "Con sustantivos contables",
+                "Con sustantivos incontables",
+                "Con verbos",
+                "Con adjetivos"
+            ],
+            "respuesta": "Con sustantivos incontables"
+        },
+        {
+            "pregunta": "Completa: 'If I had money, I ___ travel.'",
+            "opciones": [
+                "will",
+                "would",
+                "can",
+                "must"
+            ],
+            "respuesta": "would"
+        },
+        {
+            "pregunta": "Participio pasado de 'write':",
+            "opciones": [
+                "wrote",
+                "written",
+                "writeing",
+                "writed"
+            ],
+            "respuesta": "written"
+        },
+        {
+            "pregunta": "Elige el Gerundio/Infinitivo correcto: 'She enjoys ___ (read) books.'",
+            "opciones": [
+                "read",
+                "to read",
+                "reading",
+                "reads"
+            ],
+            "respuesta": "reading"
+        },
+        {
+            "pregunta": "Translate: 'Responsabilidad'",
+            "opciones": [
+                "Task",
+                "Duty",
+                "Liability",
+                "Responsibility"
+            ],
+            "respuesta": "Responsibility"
+        },
+        {
+            "pregunta": "Forma comparativa de 'expensive':",
+            "opciones": [
+                "expensiver",
+                "more expensive",
+                "most expensive",
+                "expensive"
+            ],
+            "respuesta": "more expensive"
+        },
+        {
+            "pregunta": "Uso del Primer Condicional: 'If it rains, I ___ stay home.'",
+            "opciones": [
+                "will",
+                "would",
+                "can",
+                "must"
+            ],
+            "respuesta": "will"
+        },
+        {
+            "pregunta": "Elige el Phrasal Verb que significa 'posponer':",
+            "opciones": [
+                "look up",
+                "put off",
+                "take off",
+                "turn down"
+            ],
+            "respuesta": "put off"
+        },
+        {
+            "pregunta": "Translate: 'Sin embargo'",
+            "opciones": [
+                "Moreover",
+                "Therefore",
+                "However",
+                "In addition"
+            ],
+            "respuesta": "However"
+        },
+        {
+            "pregunta": "Completa: 'I have ___ been to France.'",
+            "opciones": [
+                "ever",
+                "never",
+                "yet",
+                "already"
+            ],
+            "respuesta": "never"
+        },
+        {
+            "pregunta": "Voz Pasiva: 'The book ___ (write) by a famous author.'",
+            "opciones": [
+                "wrote",
+                "was written",
+                "is writing",
+                "has wrote"
+            ],
+            "respuesta": "was written"
+        },
+        {
+            "pregunta": "Elige el pronombre relativo: 'This is the house ___ I grew up.'",
+            "opciones": [
+                "who",
+                "which",
+                "where",
+                "what"
+            ],
+            "respuesta": "where"
+        },
+        {
+            "pregunta": "Sinónimo de 'difficult':",
+            "opciones": [
+                "Easy",
+                "Simple",
+                "Hard",
+                "Light"
+            ],
+            "respuesta": "Hard"
+        },
+        {
+            "pregunta": "Uso del Past Perfect: 'He had ___ (finish) the report before the deadline.'",
+            "opciones": [
+                "finish",
+                "finished",
+                "finishing",
+                "finishes"
+            ],
+            "respuesta": "finished"
+        },
+        {
+            "pregunta": "Translate: 'Sugerencia'",
+            "opciones": [
+                "Order",
+                "Demand",
+                "Suggestion",
+                "Rule"
+            ],
+            "respuesta": "Suggestion"
+        },
+        {
+            "pregunta": "Reported Speech: 'He said, 'I am tired.'' -> He said he ___ tired.",
+            "opciones": [
+                "is",
+                "was",
+                "will be",
+                "had been"
+            ],
+            "respuesta": "was"
+        },
+        {
+            "pregunta": "Completa: 'You ___ (ought) to study more.'",
+            "opciones": [
+                "must",
+                "should",
+                "ought",
+                "could"
+            ],
+            "respuesta": "ought"
+        },
+        {
+            "pregunta": "Opuesto de 'generous':",
+            "opciones": [
+                "Kind",
+                "Selfish",
+                "Friendly",
+                "Open"
+            ],
+            "respuesta": "Selfish"
+        },
+        {
+            "pregunta": "Elige la palabra que se usa para 'a little' (con incontables):",
+            "opciones": [
+                "Few",
+                "Many",
+                "A lot",
+                "A little"
+            ],
+            "respuesta": "A little"
+        },
+        {
+            "pregunta": "Translate: 'Lograr'",
+            "opciones": [
+                "Fail",
+                "Attempt",
+                "Achieve",
+                "Miss"
+            ],
+            "respuesta": "Achieve"
+        },
+        {
+            "pregunta": "Completa: 'She speaks English ___ (fluido).'",
+            "opciones": [
+                "fluent",
+                "fluently",
+                "more fluent",
+                "fluentest"
+            ],
+            "respuesta": "fluently"
+        },
+        {
+            "pregunta": "Pregunta de etiqueta: '___ you pass me the salt?'",
+            "opciones": [
+                "Must",
+                "Should",
+                "Would",
+                "Have"
+            ],
+            "respuesta": "Would"
+        },
+        {
+            "pregunta": "Forma superlativa de 'good':",
+            "opciones": [
+                "gooder",
+                "more good",
+                "best",
+                "goodest"
+            ],
+            "respuesta": "best"
+        },
+        {
+            "pregunta": "Elige el conector de contraste: 'It was raining, ___ we went out.'",
+            "opciones": [
+                "so",
+                "because",
+                "although",
+                "since"
+            ],
+            "respuesta": "although"
+        },
+        {
+            "pregunta": "Translate: 'Recientemente'",
+            "opciones": [
+                "Lately",
+                "Early",
+                "Soon",
+                "Yesterday"
+            ],
+            "respuesta": "Lately"
+        },
+        {
+            "pregunta": "Uso del segundo condicional (deseos irreales): 'If I were rich, I ___ buy a yacht.'",
+            "opciones": [
+                "will",
+                "would",
+                "can",
+                "must"
+            ],
+            "respuesta": "would"
+        },
+        {
+            "pregunta": "Phrasal Verb para 'continuar':",
+            "opciones": [
+                "give up",
+                "keep on",
+                "put down",
+                "take up"
+            ],
+            "respuesta": "keep on"
+        },
+        {
+            "pregunta": "Sinónimo de 'major':",
+            "opciones": [
+                "Small",
+                "Minor",
+                "Important",
+                "Trivial"
+            ],
+            "respuesta": "Important"
+        },
+        {
+            "pregunta": "Completa: 'This movie is ___ than the one we saw last week.'",
+            "opciones": [
+                "good",
+                "better",
+                "best",
+                "the best"
+            ],
+            "respuesta": "better"
+        },
+        {
+            "pregunta": "Translate: 'Decisión'",
+            "opciones": [
+                "Idea",
+                "Thought",
+                "Decision",
+                "Plan"
+            ],
+            "respuesta": "Decision"
+        },
+        {
+            "pregunta": "Elige la opción que significa 'casi nunca':",
+            "opciones": [
+                "Always",
+                "Often",
+                "Seldom",
+                "Usually"
+            ],
+            "respuesta": "Seldom"
+        },
+        {
+            "pregunta": "Pasado de 'think':",
+            "opciones": [
+                "thinked",
+                "thought",
+                "thinks",
+                "thinking"
+            ],
+            "respuesta": "thought"
+        },
+        {
+            "pregunta": "Elige la palabra que se usa para 'purpose':",
+            "opciones": [
+                "Reason",
+                "Cause",
+                "Goal",
+                "Aim"
+            ],
+            "respuesta": "Purpose"
+        },
+        {
+            "pregunta": "Completa: 'Neither John ___ Mary came to the party.'",
+            "opciones": [
+                "or",
+                "nor",
+                "and",
+                "but"
+            ],
+            "respuesta": "nor"
+        },
+        {
+            "pregunta": "Translate: 'Inversión'",
+            "opciones": [
+                "Spending",
+                "Saving",
+                "Investment",
+                "Debt"
+            ],
+            "respuesta": "Investment"
+        },
+        {
+            "pregunta": "Uso de 'used to' (hábito pasado): 'I ___ smoke, but I quit.'",
+            "opciones": [
+                "use to",
+                "used to",
+                "was used to",
+                "use"
+            ],
+            "respuesta": "used to"
+        },
+        {
+            "pregunta": "Elige la preposición correcta: 'She is interested ___ music.'",
+            "opciones": [
+                "on",
+                "at",
+                "in",
+                "with"
+            ],
+            "respuesta": "in"
+        },
+        {
+            "pregunta": "Opuesto de 'polite':",
+            "opciones": [
+                "Rude",
+                "Friendly",
+                "Kind",
+                "Formal"
+            ],
+            "respuesta": "Rude"
+        },
+        {
+            "pregunta": "Translate: 'Conclusión'",
+            "opciones": [
+                "Introduction",
+                "Middle",
+                "Summary",
+                "Conclusion"
+            ],
+            "respuesta": "Conclusion"
+        },
+        {
+            "pregunta": "Elige la opción para expresar obligación fuerte: 'You ___ follow the rules.'",
+            "opciones": [
+                "might",
+                "should",
+                "must",
+                "can"
+            ],
+            "respuesta": "must"
+        },
+        {
+            "pregunta": "Phrasal Verb para 'empezar' un hobby o deporte:",
+            "opciones": [
+                "give up",
+                "take up",
+                "look up",
+                "put up"
+            ],
+            "respuesta": "take up"
+        },
+        {
+            "pregunta": "Sinónimo de 'clever':",
+            "opciones": [
+                "Stupid",
+                "Dull",
+                "Smart",
+                "Slow"
+            ],
+            "respuesta": "Smart"
+        },
+        {
+            "pregunta": "Completa: 'I wish I ___ (know) the answer.'",
+            "opciones": [
+                "know",
+                "knew",
+                "known",
+                "had known"
+            ],
+            "respuesta": "knew"
+        },
+        {
+            "pregunta": "Translate: 'Estrategia'",
+            "opciones": [
+                "Tactic",
+                "Method",
+                "Policy",
+                "Strategy"
+            ],
+            "respuesta": "Strategy"
+        },
+        {
+            "pregunta": "Elige la estructura correcta: 'He is tall ___ his brother.'",
+            "opciones": [
+                "as as",
+                "as tall as",
+                "so tall as",
+                "tall as"
+            ],
+            "respuesta": "as tall as"
+        },
+        {
+            "pregunta": "Voz Pasiva en Presente Perfecto: 'The house ___ (sell) recently.'",
+            "opciones": [
+                "is sold",
+                "has been sold",
+                "have been sold",
+                "was sold"
+            ],
+            "respuesta": "has been sold"
+        },
+        {
+            "pregunta": "Completa: 'They couldn't come ___ the bad weather.'",
+            "opciones": [
+                "because",
+                "because of",
+                "so",
+                "as a result"
+            ],
+            "respuesta": "because of"
+        },
+        {
+            "pregunta": "Opuesto de 'optimistic':",
+            "opciones": [
+                "Hopeful",
+                "Pessimistic",
+                "Cheerful",
+                "Positive"
+            ],
+            "respuesta": "Pessimistic"
+        }
+    ],
+    "avanzado": [
+        {
+            "pregunta": "Translate: 'Estipular' (formal)",
+            "opciones": [
+                "Suggest",
+                "Stipulate",
+                "Demand",
+                "Request"
+            ],
+            "respuesta": "Stipulate"
+        },
+        {
+            "pregunta": "Completa con el Modal perfecto: 'He ___ (must have missed) the train, he's late.'",
+            "opciones": [
+                "must miss",
+                "must have missed",
+                "might miss",
+                "should miss"
+            ],
+            "respuesta": "must have missed"
+        },
+        {
+            "pregunta": "Sinónimo de 'Ubiquitous':",
+            "opciones": [
+                "Scarce",
+                "Rare",
+                "Omnipresent",
+                "Local"
+            ],
+            "respuesta": "Omnipresent"
+        },
+        {
+            "pregunta": "Elige la Collocation: 'To take ___ of a situation.'",
+            "opciones": [
+                "control",
+                "advantage",
+                "care",
+                "responsibility"
+            ],
+            "respuesta": "advantage"
+        },
+        {
+            "pregunta": "Inversión de adverbio negativo: '___ had I left, than it started raining.'",
+            "opciones": [
+                "Hardly",
+                "Rarely",
+                "Never",
+                "Scarcely"
+            ],
+            "respuesta": "Hardly"
+        },
+        {
+            "pregunta": "Translate: 'Preponderante'",
+            "opciones": [
+                "Minor",
+                "Secondary",
+                "Dominant",
+                "Subordinate"
+            ],
+            "respuesta": "Dominant"
+        },
+        {
+            "pregunta": "Uso del Tercer Condicional (arrepentimiento): 'If I had known, I ___ (would have come) sooner.'",
+            "opciones": [
+                "would come",
+                "will come",
+                "would have come",
+                "came"
+            ],
+            "respuesta": "would have come"
+        },
+        {
+            "pregunta": "Elige el Cleft Sentence correcto: 'What I want is ___.'",
+            "opciones": [
+                "is a rest",
+                "a rest",
+                "that a rest",
+                "to rest"
+            ],
+            "respuesta": "a rest"
+        },
+        {
+            "pregunta": "Phrasal Verb para 'descubrir la verdad':",
+            "opciones": [
+                "find out",
+                "set off",
+                "put out",
+                "get over"
+            ],
+            "respuesta": "find out"
+        },
+        {
+            "pregunta": "Antónimo de 'Perfunctory':",
+            "opciones": [
+                "Careful",
+                "Superficial",
+                "Casual",
+                "Hasty"
+            ],
+            "respuesta": "Careful"
+        },
+        {
+            "pregunta": "Translate: 'Evasivo'",
+            "opciones": [
+                "Direct",
+                "Clear",
+                "Evasive",
+                "Open"
+            ],
+            "respuesta": "Evasive"
+        },
+        {
+            "pregunta": "Completa: 'No sooner had they arrived ___ they were told to leave.'",
+            "opciones": [
+                "when",
+                "than",
+                "that",
+                "while"
+            ],
+            "respuesta": "than"
+        },
+        {
+            "pregunta": "Sustantivo de 'disrupt':",
+            "opciones": [
+                "disrupter",
+                "disruption",
+                "disruptive",
+                "disrupted"
+            ],
+            "respuesta": "disruption"
+        },
+        {
+            "pregunta": "Elige la expresión idiomática que significa 'hacer un esfuerzo considerable':",
+            "opciones": [
+                "pull your leg",
+                "break a leg",
+                "pull your weight",
+                "go the extra mile"
+            ],
+            "respuesta": "go the extra mile"
+        },
+        {
+            "pregunta": "Reported Speech avanzado (futuro en el pasado): 'She said, 'I will call you tomorrow.'' -> She said she ___ call me the next day.",
+            "opciones": [
+                "will",
+                "would",
+                "is going to",
+                "is calling"
+            ],
+            "respuesta": "would"
+        },
+        {
+            "pregunta": "Translate: 'Consenso'",
+            "opciones": [
+                "Disagreement",
+                "Debate",
+                "Consensus",
+                "Argument"
+            ],
+            "respuesta": "Consensus"
+        },
+        {
+            "pregunta": "Adjetivo para describir algo 'extremadamente bueno':",
+            "opciones": [
+                "Bad",
+                "Decent",
+                "Exquisite",
+                "Mediocre"
+            ],
+            "respuesta": "Exquisite"
+        },
+        {
+            "pregunta": "Voz Pasiva con Modales: 'The problem ___ (should have been addressed) sooner.'",
+            "opciones": [
+                "should address",
+                "should have been addressed",
+                "should be addressed",
+                "should have addressed"
+            ],
+            "respuesta": "should have been addressed"
+        },
+        {
+            "pregunta": "Elige el Pronombre Recíproco: 'They helped ___ (el uno al otro) with the task.'",
+            "opciones": [
+                "themselves",
+                "each other",
+                "one another",
+                "all"
+            ],
+            "respuesta": "each other"
+        },
+        {
+            "pregunta": "Sinónimo de 'Meticulous':",
+            "opciones": [
+                "Careless",
+                "Precise",
+                "Rough",
+                "Sloppy"
+            ],
+            "respuesta": "Precise"
+        },
+        {
+            "pregunta": "Translate: 'Desilusionar'",
+            "opciones": [
+                "Satisfy",
+                "Encourage",
+                "Disappoint",
+                "Fulfill"
+            ],
+            "respuesta": "Disappoint"
+        },
+        {
+            "pregunta": "Completa la cláusula de relativo no definitoria: 'My brother, ___ is a lawyer, lives in London.'",
+            "opciones": [
+                "which",
+                "that",
+                "who",
+                "whom"
+            ],
+            "respuesta": "who"
+        },
+        {
+            "pregunta": "Elige el conector que significa 'a pesar de':",
+            "opciones": [
+                "In spite of",
+                "Due to",
+                "Because",
+                "Therefore"
+            ],
+            "respuesta": "In spite of"
+        },
+        {
+            "pregunta": "Estructura de Voz Pasiva: 'I got ___ (my hair cut) yesterday.'",
+            "opciones": [
+                "my hair cut",
+                "cut my hair",
+                "to cut my hair",
+                "my hair was cut"
+            ],
+            "respuesta": "my hair cut"
+        },
+        {
+            "pregunta": "Antónimo de 'Mitigate':",
+            "opciones": [
+                "Alleviate",
+                "Worsen",
+                "Soothe",
+                "Lessen"
+            ],
+            "respuesta": "Worsen"
+        },
+        {
+            "pregunta": "Translate: 'Ejecutar (un plan)'",
+            "opciones": [
+                "Cancel",
+                "Execute",
+                "Delay",
+                "Propose"
+            ],
+            "respuesta": "Execute"
+        },
+        {
+            "pregunta": "Completa: 'Were it not ___ your help, I would have failed.'",
+            "opciones": [
+                "with",
+                "for",
+                "to",
+                "by"
+            ],
+            "respuesta": "for"
+        },
+        {
+            "pregunta": "Elige la expresión idiomática para 'ser muy caro':",
+            "opciones": [
+                "a piece of cake",
+                "break the bank",
+                "cost an arm and a leg",
+                "hit the nail on the head"
+            ],
+            "respuesta": "cost an arm and a leg"
+        },
+        {
+            "pregunta": "Phrasal Verb para 'compensar' o 'reconciliarse':",
+            "opciones": [
+                "make up for",
+                "go over",
+                "turn in",
+                "call off"
+            ],
+            "respuesta": "make up for"
+        },
+        {
+            "pregunta": "Sinónimo de 'Tantamount':",
+            "opciones": [
+                "Opposite",
+                "Equivalent",
+                "Different",
+                "Inferior"
+            ],
+            "respuesta": "Equivalent"
+        },
+        {
+            "pregunta": "Translate: 'Especulación'",
+            "opciones": [
+                "Certainty",
+                "Fact",
+                "Speculation",
+                "Evidence"
+            ],
+            "respuesta": "Speculation"
+        },
+        {
+            "pregunta": "Completa la inversión (poco común): '___ is he rich, but he is also generous.'",
+            "opciones": [
+                "Only",
+                "Not only",
+                "Seldom",
+                "Hardly"
+            ],
+            "respuesta": "Not only"
+        },
+        {
+            "pregunta": "Elige la palabra que describe un 'período de tiempo muy corto':",
+            "opciones": [
+                "Decade",
+                "Epoch",
+                "Flicker",
+                "Century"
+            ],
+            "respuesta": "Flicker"
+        },
+        {
+            "pregunta": "Uso de 'wish' con 'past perfect' (arrepentimiento pasado): 'I wish I ___ (had studied) harder in college.'",
+            "opciones": [
+                "study",
+                "studied",
+                "had studied",
+                "would study"
+            ],
+            "respuesta": "had studied"
+        },
+        {
+            "pregunta": "Collocation para 'tener mucho conocimiento':",
+            "opciones": [
+                "high knowledge",
+                "deep knowledge",
+                "tall knowledge",
+                "wide knowledge"
+            ],
+            "respuesta": "deep knowledge"
+        },
+        {
+            "pregunta": "Translate: 'Intrínseco'",
+            "opciones": [
+                "Extrinsic",
+                "External",
+                "Intrinsic",
+                "Apparent"
+            ],
+            "respuesta": "Intrinsic"
+        },
+        {
+            "pregunta": "Elige la estructura correcta de *unreal past*: 'It's high time you ___ (found) a job.'",
+            "opciones": [
+                "find",
+                "found",
+                "to find",
+                "are finding"
+            ],
+            "respuesta": "found"
+        },
+        {
+            "pregunta": "Sinónimo de 'Pernicious':",
+            "opciones": [
+                "Beneficial",
+                "Harmless",
+                "Destructive",
+                "Innocuous"
+            ],
+            "respuesta": "Destructive"
+        },
+        {
+            "pregunta": "Expresión idiomática para 'evitar decir algo directamente':",
+            "opciones": [
+                "beat around the bush",
+                "cut to the chase",
+                "get to the point",
+                "speak clearly"
+            ],
+            "respuesta": "beat around the bush"
+        },
+        {
+            "pregunta": "Completa: 'You ___ (needn't have bought) bread, we already had some.'",
+            "opciones": [
+                "didn't need to buy",
+                "needn't buy",
+                "needn't have bought",
+                "mustn't buy"
+            ],
+            "respuesta": "needn't have bought"
+        },
+        {
+            "pregunta": "Translate: 'Dilucidar'",
+            "opciones": [
+                "Confuse",
+                "Obscure",
+                "Clarify",
+                "Complicate"
+            ],
+            "respuesta": "Clarify"
+        },
+        {
+            "pregunta": "Elige el Pronombre Indefinido: '___ believes his story.'",
+            "opciones": [
+                "Any",
+                "None",
+                "Some",
+                "Much"
+            ],
+            "respuesta": "None"
+        },
+        {
+            "pregunta": "Voz Pasiva Impersonal: 'It is ___ (believed) that the world is round.'",
+            "opciones": [
+                "believed",
+                "believing",
+                "believe",
+                "to believe"
+            ],
+            "respuesta": "believed"
+        },
+        {
+            "pregunta": "Antónimo de 'Mundane':",
+            "opciones": [
+                "Ordinary",
+                "Exciting",
+                "Daily",
+                "Commonplace"
+            ],
+            "respuesta": "Exciting"
+        },
+        {
+            "pregunta": "Elige la preposición correcta después de 'abstain': 'To abstain ___ voting.'",
+            "opciones": [
+                "from",
+                "on",
+                "with",
+                "about"
+            ],
+            "respuesta": "from"
+        },
+        {
+            "pregunta": "Translate: 'Resiliencia'",
+            "opciones": [
+                "Weakness",
+                "Fragility",
+                "Resilience",
+                "Vulnerability"
+            ],
+            "respuesta": "Resilience"
+        },
+        {
+            "pregunta": "Completa con el Adverbio/Conector: 'She studied hard; ___ she failed the exam.'",
+            "opciones": [
+                "therefore",
+                "consequently",
+                "nevertheless",
+                "in addition"
+            ],
+            "respuesta": "nevertheless"
+        },
+        {
+            "pregunta": "Elige el Gerundio/Infinitivo correcto después de 'regret': 'I regret ___ (to inform) you that the position has been filled.' (dar una noticia negativa)",
+            "opciones": [
+                "informing",
+                "to inform",
+                "inform",
+                "informed"
+            ],
+            "respuesta": "to inform"
+        },
+        {
+            "pregunta": "Expresión idiomática para 'rendirse':",
+            "opciones": [
+                "take off",
+                "give up",
+                "put up",
+                "look up"
+            ],
+            "respuesta": "give up"
+        },
+        {
+            "pregunta": "Sinónimo de 'Superfluous':",
+            "opciones": [
+                "Necessary",
+                "Essential",
+                "Redundant",
+                "Crucial"
+            ],
+            "respuesta": "Redundant"
+        }
+    ]
+}
