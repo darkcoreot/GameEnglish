@@ -599,28 +599,33 @@ async function cargarRankingGlobal() {
       return;
     }
 
-    let html = `<strong>🌍 Ranking global — TOP ${snap.size}</strong><br><br>`;
-    let posicion = 1;
+    let html = "";
+    let pos = 1;
+
     snap.forEach(doc => {
       const d = doc.data();
       html += `
         <div class="leader-row">
-          <div>${posicion}. <strong>${esc(d.nombre || "Anon")}</strong></div>
-          <div>${formatNum(d.tiempo_total || 0)}s</div>
+          <div>${pos}. <strong>${esc(d.nombre || "Anon")}</strong></div>
+          <div>
+            <div>${formatNum(d.tiempo_total || 0)}s</div>
+            <div class="muted small">✔ ${d.correctas || 0} ✖ ${d.incorrectas || 0}</div>
+          </div>
         </div>
       `;
-      posicion++;
+      pos++;
     });
 
     modalMessage.innerHTML = `
-      <strong>🌍 Ranking global</strong>
+      <h3>🌍 Ranking Global</h3>
       <div style="margin-top:12px; max-height:300px; overflow-y:auto;">
         ${html}
       </div>
     `;
+
     modalCancel.classList.add("hidden");
     modalOverlay.classList.remove("hidden");
-    modalOk.onclick = () => { modalOverlay.classList.add("hidden"); };
+    modalOk.onclick = () => modalOverlay.classList.add("hidden");
 
   } catch (e) {
     console.error("Error cargando ranking global:", e);
