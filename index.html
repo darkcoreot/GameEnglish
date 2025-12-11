@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Quiz Inglés</title>
 
+<!-- CSS llegará en la PARTE 2 -->
 <style>
 /* ========================= */
 /*        VARIABLES          */
@@ -143,11 +144,14 @@ header {
   color:var(--fg);
 }
 
-/* Solo queda botón ranking global */
 .rank-tools {
   margin-top:12px;
   display:flex;
   gap:8px;
+}
+
+.info-pin {
+  margin-top:12px;
 }
 
 /* ========================= */
@@ -298,77 +302,100 @@ header {
 .hidden { display:none !important; }
 
 /* ========================= */
-/* ANIMACIONES */
+/*      ANIMACIONES          */
 /* ========================= */
 .fade-in { animation:fadeIn .35s ease both; }
 .slide-up { animation:slideUp .45s ease both; }
 .scale-in { animation:scaleIn .35s ease both; }
 
-@keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
-@keyframes slideUp { from {opacity:0; transform:translateY(16px);} to {opacity:1; transform:none;} }
-@keyframes scaleIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:none;}
+}
+@keyframes slideUp {
+  from {opacity:0; transform:translateY(16px);}
+  to {opacity:1; transform:none;}
+}
+@keyframes scaleIn {
+  from {opacity:0; transform:scale(0.8);}
+  to {opacity:1; transform:scale(1);}
+}
 
 /* ========================= */
-/* RESPONSIVE */
+/*       RESPONSIVE          */
 /* ========================= */
 @media (max-width:900px){
-  .app { grid-template-columns:1fr; padding:12px; }
+  .app {
+    grid-template-columns:1fr;
+    padding:12px;
+  }
   .profiles-panel { order:2; }
   .main-panel { order:1; }
 }
+
 </style>
 
 </head>
 <body>
 <div class="app">
 
-<header class="fade-in">
-  <div class="brand"><h1>Quiz Inglés</h1></div>
-  <div class="theme-area">
-    <label>Tema claro</label>
-    <input id="themeToggle" type="checkbox">
-  </div>
-</header>
-
-<!-- SIDEBAR -->
-<aside class="profiles-panel slide-up">
-  <h2>Perfiles</h2>
-
-  <div id="profilesList" class="profiles-list"></div>
-
-  <div class="create-row">
-    <input id="inputProfile" placeholder="Nombre del jugador">
-    <button id="btnCreateProfile" class="btn accent">➕ Crear</button>
-  </div>
-
-  <div class="rank-tools">
-    <button id="btnGlobalRank" class="btn accent small">🌍 Ranking global</button>
-  </div>
-
-  <div class="muted small info-pin">
-    Se utiliza un PIN numérico de 4 dígitos para entrar al perfil.
-  </div>
-</aside>
-
-<main class="main-panel slide-up" id="mainPanel">
-  <div id="mainContent">
-    <div class="card fade-in">
-      <h2>Bienvenido 👋</h2>
-      <p class="muted">Selecciona o crea un perfil.  
-      El ranking refleja el tiempo acumulado (menor = mejor).</p>
+  <!-- HEADER -->
+  <header class="fade-in">
+    <div class="brand">
+      <h1>Quiz Inglés </h1>
     </div>
 
-    <div class="card fade-in" style="margin-top:12px">
-      <h3>Ranking local</h3>
-      <div id="leaderboard" class="leaderboard muted">Cargando...</div>
+    <div class="theme-area">
+      <label>Tema claro</label>
+      <input id="themeToggle" type="checkbox">
     </div>
-  </div>
-</main>
+  </header>
+
+  <!-- SIDEBAR PERFILES -->
+  <aside class="profiles-panel slide-up">
+    <h2>Perfiles</h2>
+
+    <div id="profilesList" class="profiles-list"></div>
+
+    <!-- Crear perfil -->
+    <div class="create-row">
+      <input id="inputProfile" placeholder="Nombre del jugador">
+      <button id="btnCreateProfile" class="btn accent">➕ Crear</button>
+    </div>
+
+    <!-- Ranking local export/import (REEMPLAZADO por Ranking global) -->
+    <div class="rank-tools">
+      <button id="btnGlobalRank" class="btn accent small">🌍 Ranking global</button>
+    </div>
+
+    <div class="muted small info-pin">
+      Se utiliza un PIN numérico de 4 dígitos para entrar al perfil.
+    </div>
+  </aside>
+
+  <!-- PANEL PRINCIPAL -->
+  <main class="main-panel slide-up" id="mainPanel">
+    <div id="mainContent">
+      <div class="card fade-in">
+        <h2>Bienvenido 👋</h2>
+        <p class="muted">
+          Selecciona o crea un perfil.  
+          El ranking refleja el tiempo acumulado (menor = mejor).
+        </p>
+      </div>
+
+      <div class="card fade-in" style="margin-top:12px">
+        <h3>Ranking local</h3>
+        <div id="leaderboard" class="leaderboard muted">Cargando...</div>
+      </div>
+    </div>
+  </main>
+
 </div>
 
-<!-- MODAL -->
+<!-- =============== MODAL CUSTOM =============== -->
 <div id="modalOverlay" class="modal-overlay hidden">
-  <div class="modal-window scale-in">
+  <div class="modal-window scale-in" id="modalWindow">
     <div id="modalMessage" class="modal-message"></div>
     <div class="modal-actions">
       <button id="modalOk" class="btn accent">Aceptar</button>
@@ -377,19 +404,15 @@ header {
   </div>
 </div>
 
-<!-- AUDIO -->
+<!-- =============== AUDIO SONIDOS =============== -->
 <audio id="sndCorrect"></audio>
 <audio id="sndWrong"></audio>
 <audio id="sndTime"></audio>
+<!-- Firebase App + Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
-<!-- SCRIPT INICIA AQUÍ -->
-<script type="module">
-
-/* ========== FIREBASE ========== */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy } 
-  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyAoYaWXxQhqe7FZbyA_qBE3Hz6iJgONV3c",
   authDomain: "quizenglish-f4708.firebaseapp.com",
@@ -399,392 +422,543 @@ const firebaseConfig = {
   appId: "1:992301935930:web:bd3965a3dabf8937743403"
 };
 
-const appFB = initializeApp(firebaseConfig);
-const db = getFirestore(appFB);
-const sndCorrect = document.getElementById("sndCorrect");
-const sndWrong   = document.getElementById("sndWrong");
-const sndTime    = document.getElementById("sndTime");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
 
-sndCorrect.src = "https://cdn.pixabay.com/download/audio/2022/07/04/audio_06fbc2436a.mp3?filename=correct-2-46134.mp3";
-sndWrong.src   = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_6da5fd77f2.mp3?filename=error-126627.mp3";
-sndTime.src    = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_18f3d1063f.mp3?filename=beep-warning-6387.mp3";
-
-/* ============================================================
-   MODAL
-============================================================ */
-const modalOverlay = document.getElementById("modalOverlay");
-const modalMessage = document.getElementById("modalMessage");
-const modalOk      = document.getElementById("modalOk");
-const modalCancel  = document.getElementById("modalCancel");
-
-function showModal(text, cancel = false) {
-  modalMessage.textContent = text;
-  modalCancel.classList.toggle("hidden", !cancel);
-  modalOverlay.classList.remove("hidden");
-  return new Promise(res => {
-    modalOk.onclick = () => { modalOverlay.classList.add("hidden"); res(true); };
-    modalCancel.onclick = () => { modalOverlay.classList.add("hidden"); res(false); };
-  });
-}
-
-/* ============================================================
-   VARIABLES GLOBALES
-============================================================ */
-let profiles = JSON.parse(localStorage.getItem("profiles") || "[]");
-let currentProfile = null;
-
-let questions = [];        // cuestionario activo
-let qIndex     = 0;
-let timerInt   = null;
-let timeLeft   = 15;
-let wrongCount = 0;
-let totalTime  = 0;
-
-/* ============================================================
-   PERFILES
-============================================================ */
-const elProfilesList = document.getElementById("profilesList");
-const elInputProfile = document.getElementById("inputProfile");
-const elBtnCreate    = document.getElementById("btnCreateProfile");
-
-elBtnCreate.onclick = async () => {
-  const name = elInputProfile.value.trim();
-  if (!name) return;
-
-  const pin = Math.floor(1000 + Math.random() * 9000).toString();
-
-  profiles.push({
-    name,
-    pin,
-    total: 0,
-    wrongs: 0,
-    games: 0
-  });
-
-  localStorage.setItem("profiles", JSON.stringify(profiles));
-
-  await showModal(`Perfil creado.\nPIN: ${pin}`);
-  elInputProfile.value = "";
-  renderProfiles();
-  renderLeaderboard();
-};
-
-function renderProfiles() {
-  elProfilesList.innerHTML = "";
-  profiles.forEach(p => {
-    const b = document.createElement("button");
-    b.className = "profile-btn";
-    b.textContent = p.name;
-    b.onclick = () => accessProfile(p);
-    elProfilesList.appendChild(b);
-  });
-}
-renderProfiles();
-
-/* ============================================================
-   ACCESO A PERFIL CON PIN
-============================================================ */
-async function accessProfile(p) {
-  const ok = await showModal(`Introduce el PIN para entrar en "${p.name}"`, true);
-  if (!ok) return;
-
-  const pin = prompt("PIN de 4 dígitos:");
-  if (pin === p.pin) {
-    currentProfile = p;
-    loadProfilePanel();
-  } else {
-    showModal("PIN incorrecto");
+<!-- JS COMPLETO VIENE EN PARTE 3 -->
+<script>
+/* ========== FUNCION: guardarEnRankingGlobal (ya existente, la mantengo) ========== */
+async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
+  try {
+    await db.collection("ranking").add({
+      nombre: nombre,
+      tiempo_total: tiempo_total,
+      correctas: correctas,
+      incorrectas: incorrectas,
+      fecha: Date.now()
+    });
+    console.log("✔ Puntaje guardado en ranking global");
+  } catch (error) {
+    console.error("❌ Error guardando ranking:", error);
   }
 }
 
-/* ============================================================
-   PANEL DEL PERFIL
-============================================================ */
-const elMain = document.getElementById("mainContent");
 
-function loadProfilePanel() {
-  elMain.innerHTML = `
-    <div class="card">
-      <h2>Perfil: ${currentProfile.name}</h2>
-      <p class="muted">Juegos jugados: ${currentProfile.games}</p>
-      <p class="muted">Tiempo total acumulado: ${currentProfile.total}s</p>
-      <p class="muted">Incorrectas acumuladas: ${currentProfile.wrongs}</p>
+const sndCorrect = document.getElementById("sndCorrect");
+sndCorrect.src =
+"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="; 
+// sonido simple click ok
 
-      <button id="btnStart" class="btn accent" style="margin-top:10px">
-        ▶️ Iniciar partida
-      </button>
-    </div>
-  `;
+const sndWrong = document.getElementById("sndWrong");
+sndWrong.src =
+"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
+// sonido simple error (puedes reemplazar luego por otro)
 
-  document.getElementById("btnStart").onclick = startGame;
+const sndTime = document.getElementById("sndTime");
+sndTime.src =
+"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
+// sonido simple timeout
+
+/* ---------- MODAL BONITO ---------- */
+const modalOverlay = document.getElementById("modalOverlay");
+const modalWindow = document.getElementById("modalWindow");
+const modalMessage = document.getElementById("modalMessage");
+const modalOk = document.getElementById("modalOk");
+const modalCancel = document.getElementById("modalCancel");
+
+function showModal(message, withCancel = false) {
+  modalMessage.innerHTML = message;
+  modalOverlay.classList.remove("hidden");
+  modalCancel.classList.toggle("hidden", !withCancel);
+  return new Promise(resolve => {
+    modalOk.onclick = () => {
+      modalOverlay.classList.add("hidden");
+      resolve(true);
+    };
+    modalCancel.onclick = () => {
+      modalOverlay.classList.add("hidden");
+      resolve(false);
+    };
+  });
 }
 
-/* ============================================================
-   RANKING LOCAL
-============================================================ */
-function renderLeaderboard() {
-  const el = document.getElementById("leaderboard");
-  if (!profiles.length) {
-    el.innerHTML = "<p class='muted'>Sin jugadores</p>";
+/* ---------- UTILIDADES ---------- */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function formatNum(n){ return Number(n).toFixed(2); }
+
+/* --- hash PIN --- */
+async function hashPin(pin){
+  const enc = new TextEncoder().encode(pin);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+/* ---------- STORAGE ---------- */
+const STATE_KEY = "quiz_v4_state";
+const LEADER_KEY = "quiz_v4_leaderboard";
+
+let state = { perfiles:{} };
+try{ state = JSON.parse(localStorage.getItem(STATE_KEY)) || state; }catch(e){}
+function saveState(){ localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+
+let leaderboard = [];
+try{ leaderboard = JSON.parse(localStorage.getItem(LEADER_KEY)) || []; }catch(e){}
+function saveLeader(){ localStorage.setItem(LEADER_KEY, JSON.stringify(leaderboard)); }
+
+/* ---------- DOM ---------- */
+const profilesList = document.getElementById("profilesList");
+const inputProfile = document.getElementById("inputProfile");
+const btnCreateProfile = document.getElementById("btnCreateProfile");
+const mainContent = document.getElementById("mainContent");
+const leaderboardEl = document.getElementById("leaderboard");
+/* btnExport and btnImport were removed */
+const btnGlobalRank = document.getElementById("btnGlobalRank");
+const themeToggle = document.getElementById("themeToggle");
+
+/* ---------- Cargar preguntas desde archivo externo ---------- */
+let PREGUNTAS = null;
+let loadedQuestions = false;
+
+async function loadQuestions(){
+  try{
+    const r = await fetch("preguntas.json", {cache:"no-store"});
+    if(!r.ok) throw new Error("Error HTTP");
+    PREGUNTAS = await r.json();
+    loadedQuestions = true;
+  }catch(e){
+    showModal("⚠️ No se pudo cargar <strong>preguntas.json</strong>.<br>Verifica que el archivo existe en la misma carpeta del index.html.");
+    loadedQuestions = false;
+  }
+}
+loadQuestions();
+
+/* ---------- Render Perfiles ---------- */
+function renderProfiles(){
+  profilesList.innerHTML = "";
+  const keys = Object.keys(state.perfiles).sort();
+  if(keys.length === 0){
+    profilesList.innerHTML = '<div class="muted small">No hay perfiles aún.</div>';
     return;
   }
-  const sorted = [...profiles].sort((a,b) => a.total - b.total);
-
-  el.innerHTML = "";
-  sorted.forEach((p,i) => {
-    const row = document.createElement("div");
-    row.className = "leader-row";
-    row.innerHTML = `
-      <span>${i+1}. ${p.name}</span>
-      <span>${p.total}s</span>
+  keys.forEach(name=>{
+    const p = state.perfiles[name];
+    const btn = document.createElement("button");
+    btn.className = "profile-btn";
+    btn.innerHTML = `
+      <div><strong>${esc(name)}</strong><div class="muted small">${p.nivel.toUpperCase()}</div></div>
+      <div><div class="muted small">✔ ${p.correctas}</div><div class="muted small">✖ ${p.incorrectas}</div></div>
     `;
-    el.appendChild(row);
+    btn.onclick = ()=> promptPinAndEnter(name);
+    profilesList.appendChild(btn);
   });
 }
-renderLeaderboard();
 
-/* ============================================================
-   PREGUNTAS DEMO (puedes reemplazar)
-============================================================ */
-const BASE_QUESTIONS = [
-  { q:"Dog", a:["Perro","Gato","Mesa"], c:0 },
-  { q:"House", a:["Casa","Carro","Sombrero"], c:0 },
-  { q:"Apple", a:["Manzana","Escuela","Zapato"], c:0 },
-  { q:"Water", a:["Agua","Nieve","Humo"], c:0 },
-];
+/* ---------- Crear Perfil ---------- */
+btnCreateProfile.onclick = async ()=>{
+  const name = inputProfile.value.trim();
+  if(!name) return showModal("Ingresa un nombre válido.");
+  if(state.perfiles[name]) return showModal("Ese perfil ya existe.");
 
-/* ============================================================
-   INICIO DEL JUEGO
-============================================================ */
-function startGame() {
-  questions = BASE_QUESTIONS.sort(()=>Math.random()-0.5);
-  qIndex = 0;
-  totalTime = 0;
-  wrongCount = 0;
+  let pin = prompt("Crea un PIN de 4 dígitos:");
+  if(pin===null) return;
+  if(!/^\d{4}$/.test(pin)) return showModal("PIN inválido (debe ser 4 dígitos).");
 
-  loadQuestion();
+  const h = await hashPin(pin);
+
+  state.perfiles[name] = {
+    nivel:"basico",
+    correctas:0,
+    incorrectas:0,
+    tiempo_total:0,
+    total_respuestas:0,
+    idx_pregunta:0,
+    finished_all:false,
+    pinHash:h
+  };
+
+  saveState();
+  inputProfile.value = "";
+  renderProfiles();
+  showModal("Perfil creado correctamente.");
+};
+
+/* ---------- Entrar con PIN ---------- */
+async function promptPinAndEnter(name){
+  const p = state.perfiles[name];
+
+  let pin = prompt("Ingresa el PIN de este perfil:");
+  if(pin===null) return;
+
+  if(!/^\d{4}$/.test(pin)){
+    showModal("PIN inválido.");
+    return;
+  }
+
+  const check = await hashPin(pin);
+  if(check !== p.pinHash){
+    showModal("PIN incorrecto.");
+    return;
+  }
+
+  enterProfile(name);
 }
 
-/* ============================================================
-   MOSTRAR PREGUNTA
-============================================================ */
-function loadQuestion() {
-  const q = questions[qIndex];
+/* ---------- UI Perfil ---------- */
+function enterProfile(name){
+  renderProfileMenu(name);
+}
 
-  elMain.innerHTML = `
-    <div class="card">
-      <h2>Pregunta ${qIndex+1}/${questions.length}</h2>
-      <div class="question">${q.q}</div>
+function renderProfileMenu(name){
+  const p = state.perfiles[name];
+  const nivel = p.nivel;
+  const pregNivel = (PREGUNTAS && PREGUNTAS[nivel]) ? PREGUNTAS[nivel] : [];
 
-      <div class="options">
-        ${q.a.map((t,i)=>`<button class="option-btn" data-i="${i}">${t}</button>`).join("")}
+  mainContent.innerHTML = `
+    <div class="card fade-in">
+      <h2>${esc(name)}</h2>
+      <p class="muted small">Nivel actual: ${nivel.toUpperCase()}</p>
+
+      <div class="card" style="margin-top:10px">
+        <div class="muted small">Correctas: ${p.correctas}</div>
+        <div class="muted small">Incorrectas: ${p.incorrectas}</div>
+        <div class="muted small">Tiempo total: ${formatNum(p.tiempo_total)}s</div>
+        <div class="muted small">Promedio por pregunta: ${
+          p.total_respuestas ? formatNum(p.tiempo_total/p.total_respuestas) : "0.00"
+        } s</div>
+        <div class="muted small">Posición: ${p.idx_pregunta}/${pregNivel.length}</div>
       </div>
 
-      <div class="timerbar"><div id="timerFill" class="timerfill"></div></div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+        <button id="btnContinue" class="btn accent">▶ Continuar</button>
+        <button id="btnNew" class="btn ghost">🔁 Nuevo juego</button>
+        <button id="btnAny" class="btn ghost" ${p.finished_all?"":"disabled"}>⭐ Nivel libre</button>
+        <button id="btnBack" class="btn ghost">🔙 Cerrar</button>
+      </div>
     </div>
   `;
 
-  startTimer();
+  document.getElementById("btnContinue").onclick = ()=> startLevel(name,false);
+  document.getElementById("btnNew").onclick = ()=> startLevel(name,true);
+  document.getElementById("btnBack").onclick = ()=> showHome();
 
-  document.querySelectorAll(".option-btn").forEach(btn => {
-    btn.onclick = () => answer(btn.dataset.i);
-  });
+  document.getElementById("btnAny").onclick = ()=>{
+    if(!p.finished_all){
+      showModal("Debes completar todos los niveles primero.");
+      return;
+    }
+    let lvl = prompt("Nivel (basico/medio/avanzado):");
+    if(!lvl) return;
+    lvl = lvl.toLowerCase();
+    if(!["basico","medio","avanzado"].includes(lvl)){
+      showModal("Nivel inválido.");
+      return;
+    }
+    // reset stats
+    p.nivel = lvl;
+    p.correctas = 0;
+    p.incorrectas = 0;
+    p.tiempo_total = 0;
+    p.total_respuestas = 0;
+    p.idx_pregunta = 0;
+    p.finished_all = false;
+    saveState();
+    startLevel(name,true);
+  };
 }
 
-/* ============================================================
-   TIMER
-============================================================ */
-function startTimer() {
-  timeLeft = 15;
-  updateTimerBar();
+/* ---------- Home ---------- */
+function showHome(){
+  mainContent.innerHTML = `
+    <div class="card fade-in">
+      <h2>Bienvenido 👋</h2>
+      <p class="muted">
+        Selecciona o crea un perfil para comenzar.
+      </p>
+    </div>
+    <div class="card fade-in" style="margin-top:12px">
+      <h3>Ranking local</h3>
+      <div id="leaderboard" class="leaderboard muted"></div>
+    </div>
+  `;
+  renderLeaderboard();
+}
 
-  clearInterval(timerInt);
-  timerInt = setInterval(() => {
-    timeLeft--;
-    updateTimerBar();
+/* ---------- Comenzar nivel ---------- */
+let session = {};
 
-    if (timeLeft === 3) sndTime.play();
+function startLevel(name, reset){
+  if(!loadedQuestions){
+    showModal("Preguntas no cargadas.");
+    return;
+  }
 
-    if (timeLeft <= 0) {
-      clearInterval(timerInt);
-      wrongCount++;
-      nextQuestion();
+  const stats = state.perfiles[name];
+  const nivel = stats.nivel;
+  session.lista = PREGUNTAS[nivel] ? [...PREGUNTAS[nivel]] : [];
+
+  if(reset) stats.idx_pregunta = 0;
+
+  session.idx = stats.idx_pregunta;
+  session.counters = {correctas:0, incorrectas:0, omitidas:0};
+  session.timer = null;
+
+  renderQuestion(name);
+}
+
+/* ---------- Render Pregunta ---------- */
+function renderQuestion(name){
+  clearInterval(session.timer);
+
+  const p = session.lista[session.idx];
+  if(!p){
+    finishLevel(name);
+    return;
+  }
+
+  session.remaining = 60;
+  session.startTime = Date.now();
+
+  mainContent.innerHTML = `
+    <div class="card fade-in">
+      <h3 class="question">${esc(p.pregunta)}</h3>
+
+      <div id="opts" class="options"></div>
+
+      <div class="controls" style="margin-top:12px; display:flex; gap:8px">
+        <button id="btnSkip" class="btn ghost small">⏭ Omitir</button>
+        <button id="btnSave" class="btn ghost small">💾 Guardar</button>
+        <button id="btnBack" class="btn ghost small">🔙 Volver</button>
+      </div>
+
+      <div class="timerbar">
+        <div id="timerFill" class="timerfill"></div>
+      </div>
+
+      <p class="muted small">⏱ Tiempo restante: <span id="timeTxt">60</span>s</p>
+    </div>
+  `;
+
+  const opts = document.getElementById("opts");
+  p.opciones.forEach((op,i)=>{
+    const b = document.createElement("button");
+    b.className = "option-btn";
+    b.textContent = `${String.fromCharCode(65+i)}. ${op}`;
+    b.onclick = ()=> answer(name,op,b);
+    opts.appendChild(b);
+  });
+
+  document.getElementById("btnSkip").onclick = ()=> skip(name);
+  document.getElementById("btnSave").onclick = ()=>{ saveState(); showModal("Guardado."); };
+  document.getElementById("btnBack").onclick = ()=>{ clearInterval(session.timer); renderProfileMenu(name); };
+
+  session.timer = setInterval(()=>{
+    session.remaining--;
+    document.getElementById("timeTxt").textContent = session.remaining;
+    document.getElementById("timerFill").style.width = (session.remaining/60*100)+"%";
+
+    if(session.remaining <= 0){
+      clearInterval(session.timer);
+      sndTime.play();
+      timeOut(name);
     }
   },1000);
 }
 
-function updateTimerBar() {
-  const bar = document.getElementById("timerFill");
-  if (bar) bar.style.width = (timeLeft/15)*100 + "%";
-}
+/* ---------- Responder ---------- */
+function answer(name,op,btnEl){
+  clearInterval(session.timer);
 
-/* ============================================================
-   RESPUESTA
-============================================================ */
-function answer(i) {
-  clearInterval(timerInt);
+  const p = session.lista[session.idx];
+  const stats = state.perfiles[name];
+  const t = (Date.now() - session.startTime)/1000;
 
-  const q = questions[qIndex];
-  const buttons = document.querySelectorAll(".option-btn");
+  stats.tiempo_total += t;
+  stats.total_respuestas++;
 
-  buttons.forEach(b => b.disabled = true);
-
-  if (Number(i) === q.c) {
+  if(op === p.respuesta){
     sndCorrect.play();
-    buttons[i].classList.add("correct");
+    btnEl.classList.add("correct");
+    session.counters.correctas++;
+    stats.correctas++;
+    showModal("✔ ¡Correcto!");
   } else {
     sndWrong.play();
-    wrongCount++;
-    buttons[i].classList.add("wrong");
-    buttons[q.c].classList.add("correct");
+    btnEl.classList.add("wrong");
+    session.counters.incorrectas++;
+    stats.incorrectas++;
+    showModal("✖ Incorrecto.");
   }
 
-  totalTime += (15 - timeLeft);
+  session.idx++;
+  stats.idx_pregunta = session.idx;
+  saveState();
 
-  setTimeout(nextQuestion, 1000);
+  setTimeout(()=> renderQuestion(name), 300);
 }
 
-/* ============================================================
-   SIGUIENTE PREGUNTA
-============================================================ */
-function nextQuestion() {
-  qIndex++;
-  if (qIndex >= questions.length) finishGame();
-  else loadQuestion();
+/* ---------- Omitir ---------- */
+function skip(name){
+  clearInterval(session.timer);
+  session.counters.omitidas++;
+  session.idx++;
+  state.perfiles[name].idx_pregunta = session.idx;
+  saveState();
+  renderQuestion(name);
 }
 
-/* ============================================================
-   FINALIZAR PARTIDA
-============================================================ */
-async function finishGame() {
-  currentProfile.games++;
-  currentProfile.wrongs += wrongCount;
-  currentProfile.total  += totalTime;
+/* ---------- Timeout ---------- */
+function timeOut(name){
+  const stats = state.perfiles[name];
+  stats.tiempo_total += 60;
+  stats.total_respuestas++;
+  stats.incorrectas++;
+  session.counters.incorrectas++;
 
-  localStorage.setItem("profiles", JSON.stringify(profiles));
+  session.idx++;
+  stats.idx_pregunta = session.idx;
+  saveState();
 
-  await saveGlobalRanking(
-    currentProfile.name,
-    totalTime,
-    questions.length - wrongCount,
-    wrongCount
-  );
-
-  showResults();
-  renderLeaderboard();
+  showModal("⏳ Tiempo agotado. Se marca incorrecta.");
+  renderQuestion(name);
 }
 
-/* ============================================================
-   MOSTRAR RESULTADOS
-============================================================ */
-function showResults() {
-  elMain.innerHTML = `
-    <div class="card scale-in">
-      <h2>Resultados</h2>
-      <p>Tiempo total: ${totalTime}s</p>
-      <p>Correctas: ${questions.length - wrongCount}</p>
-      <p>Incorrectas: ${wrongCount}</p>
+/* ---------- Fin nivel ---------- */
+function finishLevel(name){
+  clearInterval(session.timer);
+  const stats = state.perfiles[name];
+  const total = session.lista.length;
+  const score = (session.counters.correctas/total)*100;
 
-      <button class="btn accent" id="btnBack">Volver</button>
-    </div>
+  let msg = `
+    <strong>Resultados:</strong><br>
+    ✔ Correctas: ${session.counters.correctas}<br>
+    ✖ Incorrectas: ${session.counters.incorrectas}<br>
+    ⏭ Omitidas: ${session.counters.omitidas}<br><br>
+    <strong>Puntaje:</strong> ${score.toFixed(2)}%
   `;
 
-  document.getElementById("btnBack").onclick = loadProfilePanel;
-}
+  const levels = ["basico","medio","avanzado"];
 
-/* ============================================================
-   FIREBASE — GUARDAR RANKING GLOBAL
-============================================================ */
-async function saveGlobalRanking(name, time, correct, wrong) {
-  try {
-    await addDoc(collection(db, "globalRanking"), {
-      name,
-      time,
-      correct,
-      wrong,
-      date: Date.now()
-    });
-  } catch (e) {
-    console.error("Error guardando en ranking global:", e);
+  if(score >= 80){
+    msg += "<br><br>🎉 ¡Aprobaste!";
+    if(stats.nivel === "basico") stats.nivel="medio";
+    else if(stats.nivel==="medio") stats.nivel="avanzado";
+    else stats.finished_all = true;
+    stats.idx_pregunta=0;
+  } else {
+    msg += "<br><br>🔁 No alcanzaste el 80%. Repite el nivel.";
   }
+
+  saveState();
+  updateLeaderboard(name, stats.tiempo_total);
+
+  /* ========== NUEVA LÍNEA: guardar en ranking global ========== */
+  try {
+    // llamar la función para guardar en Firestore (no bloqueante)
+    guardarEnRankingGlobal(name, stats.tiempo_total, stats.correctas, stats.incorrectas);
+  } catch(e) {
+    console.warn("No se pudo guardar en ranking global:", e);
+  }
+  /* ========================================================== */
+
+  showModal(msg);
+  renderProfiles();
+  renderLeaderboard();
+  renderProfileMenu(name);
 }
 
-/* ============================================================
-   FIREBASE — LEER RANKING GLOBAL
-============================================================ */
-async function loadGlobalRanking() {
+/* ---------- Ranking local ---------- */
+function updateLeaderboard(name, tiempo){
+  const i = leaderboard.findIndex(x=>x.name===name);
+  if(i>=0) leaderboard[i].tiempo_total = tiempo;
+  else leaderboard.push({name, tiempo_total:tiempo});
+  leaderboard.sort((a,b)=>a.tiempo_total - b.tiempo_total);
+  saveLeader();
+}
+
+function renderLeaderboard(){
+  leaderboardEl.innerHTML = "";
+  if(leaderboard.length===0){
+    leaderboardEl.innerHTML = "<div class='muted small'>Sin datos aún.</div>";
+    return;
+  }
+
+  leaderboard.forEach((r,i)=>{
+    const row = document.createElement("div");
+    row.className = "leader-row";
+    row.innerHTML = `
+      <div>${i+1}. <strong>${esc(r.name)}</strong></div>
+      <div>${formatNum(r.tiempo_total)}s</div>
+    `;
+    leaderboardEl.appendChild(row);
+  });
+}
+
+/* ---------- Exportar / Importar ranking ---------- */
+/* Eliminados según lo solicitado. */
+
+/* ---------- Tema ---------- */
+themeToggle.onchange = ()=> {
+  if(themeToggle.checked) document.documentElement.classList.add("light");
+  else document.documentElement.classList.remove("light");
+};
+
+/* ---------- Inicial ---------- */
+renderProfiles();
+renderLeaderboard();
+
+/* =========================
+   RANKING GLOBAL: FUNCIONES PARA LEER Y MOSTRAR
+   (Se usa la misma instancia `db` ya inicializada arriba)
+   ========================= */
+
+/* Cargar ranking global (top 30 ordenado por tiempo ascendente) */
+async function cargarRankingGlobal() {
   try {
-    const q = query(
-      collection(db, "globalRanking"),
-      orderBy("time", "asc")
-    );
+    const snap = await db.collection("ranking")
+      .orderBy("tiempo_total", "asc")
+      .limit(30)
+      .get();
 
-    const snap = await getDocs(q);
+    if (snap.empty) {
+      showModal("🌍<br>No hay datos en el ranking global.");
+      return;
+    }
 
-    let html = "";
-
+    let html = `<strong>🌍 Ranking global — TOP ${snap.size}</strong><br><br>`;
+    let posicion = 1;
     snap.forEach(doc => {
       const d = doc.data();
       html += `
         <div class="leader-row">
-          <span>${d.name}</span>
-          <span>${d.time}s</span>
+          <div>${posicion}. <strong>${esc(d.nombre || "Anon")}</strong></div>
+          <div>${formatNum(d.tiempo_total || 0)}s</div>
         </div>
       `;
+      posicion++;
     });
 
-    if (!html) html = `<p class="muted">Sin registros aún</p>`;
-
-    showGlobalRankingModal(html);
+    // Mostrar dentro del modal bonito (sin botón cancelar)
+    modalMessage.innerHTML = `
+      <strong>🌍 Ranking global</strong>
+      <div style="margin-top:12px; max-height:300px; overflow-y:auto;">
+        ${html}
+      </div>
+    `;
+    modalCancel.classList.add("hidden");
+    modalOverlay.classList.remove("hidden");
+    modalOk.onclick = () => { modalOverlay.classList.add("hidden"); };
 
   } catch (e) {
     console.error("Error cargando ranking global:", e);
-    showModal("No se pudo conectar con el ranking global");
+    showModal("❌ No se pudo cargar el ranking global.");
   }
 }
 
-/* ============================================================
-   MODAL DE RANKING GLOBAL
-============================================================ */
-function showGlobalRankingModal(content) {
-  modalMessage.innerHTML = `
-    <strong>🌍 Ranking global</strong>
-    <div style="margin-top:12px; max-height:260px; overflow-y:auto;">
-      ${content}
-    </div>
-  `;
-  modalCancel.classList.add("hidden");
-  modalOverlay.classList.remove("hidden");
+/* Conectar botón Ranking global */
+btnGlobalRank.onclick = cargarRankingGlobal;
 
-  modalOk.onclick = () => modalOverlay.classList.add("hidden");
-}
-
-/* Evento del botón */
-document.getElementById("btnGlobalRank").onclick = loadGlobalRanking;
-
-/* ============================================================
-   TEMA CLARO / OSCURO
-============================================================ */
-const themeToggle = document.getElementById("themeToggle");
-
-themeToggle.checked = localStorage.getItem("themeLight") === "1";
-applyTheme();
-
-themeToggle.onchange = () => {
-  localStorage.setItem("themeLight", themeToggle.checked ? "1":"0");
-  applyTheme();
-};
-
-function applyTheme() {
-  if (localStorage.getItem("themeLight") === "1")
-    document.body.classList.add("light");
-  else
-    document.body.classList.remove("light");
-}
-
-/* ============================================================
-   FIN DEL SCRIPT
-============================================================ */
 </script>
 
 </body>
