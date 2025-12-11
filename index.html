@@ -27,10 +27,10 @@
   --glass:rgba(0,0,0,0.04);
 }
 *{ box-sizing:border-box; }
-html, body { margin:0; font-family:Inter, "Segoe UI", sans-serif; background:var(--bg); color:var(--fg); height:100%; }
+html, body { margin:0; font-family:Inter,"Segoe UI",sans-serif; background:var(--bg); color:var(--fg); height:100%; }
 body { padding:20px; display:flex; justify-content:center; align-items:center; }
 .app { width:100%; max-width:1150px; min-height:600px; padding:18px; border-radius:14px; background:var(--panel); box-shadow:0 18px 45px rgba(0,0,0,0.45); display:grid; grid-template-columns:320px 1fr; gap:18px; }
-header { grid-column:1 / -1; display:flex; justify-content:space-between; align-items:center; }
+header { grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; }
 .brand h1 { margin:0; font-size:22px; }
 .brand-sub { font-size:13px; color:var(--muted); }
 .theme-area { display:flex; align-items:center; gap:10px; color:var(--muted); }
@@ -58,7 +58,7 @@ header { grid-column:1 / -1; display:flex; justify-content:space-between; align-
 .option-btn.correct { background:rgba(16,185,129,0.18); border-left:4px solid var(--good); }
 .option-btn.wrong { background:rgba(239,68,68,0.18); border-left:4px solid var(--danger); }
 .timerbar { height:10px; background:var(--glass); border-radius:6px; overflow:hidden; margin-top:12px; }
-.timerfill { height:100%; background:linear-gradient(90deg,var(--accent), #60a5fa); width:100%; transition:width 1s linear; }
+.timerfill { height:100%; background:linear-gradient(90deg,var(--accent),#60a5fa); width:100%; transition:width 1s linear; }
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:999; }
 .modal-window { background:var(--card); width:350px; max-width:90%; border-radius:12px; padding:18px; box-shadow:0 18px 40px rgba(0,0,0,0.5); }
 .modal-message { margin-bottom:14px; font-size:15px; }
@@ -70,7 +70,11 @@ header { grid-column:1 / -1; display:flex; justify-content:space-between; align-
 @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
 @keyframes slideUp { from {opacity:0; transform:translateY(16px);} to {opacity:1; transform:none;} }
 @keyframes scaleIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
-@media (max-width:900px){ .app { grid-template-columns:1fr; padding:12px; } .profiles-panel { order:2; } .main-panel { order:1; } }
+@media(max-width:900px){
+  .app{grid-template-columns:1fr;padding:12px;}
+  .profiles-panel{order:2;}
+  .main-panel{order:1;}
+}
 </style>
 </head>
 <body>
@@ -125,245 +129,218 @@ header { grid-column:1 / -1; display:flex; justify-content:space-between; align-
 <audio id="sndWrong"></audio>
 <audio id="sndTime"></audio>
 
-<!-- USAMOS las versiones "compat" para que firebase.initializeApp() y firebase.firestore() funcionen desde un HTML simple -->
+<!-- Firebase compat -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
-/* ===========================
-   CONFIG FIREBASE (usa tus credenciales)
-   =========================== */
-/* Usé las credenciales que pusiste al principio en tu mensaje */
+/* ======================
+   CONFIG FIREBASE
+   ====================== */
 const firebaseConfig = {
   apiKey: "AIzaSyAoYaWXxQhqe7FZbyA_qBE3Hz6iJgONV3c",
   authDomain: "quizenglish-f4708.firebaseapp.com",
   projectId: "quizenglish-f4708",
-  storageBucket: "quizenglish-f4708.appspot.com", // corregido formato
+  storageBucket: "quizenglish-f4708.appspot.com",
   messagingSenderId: "992301935930",
   appId: "1:992301935930:web:bd3965a3dabf8937743403",
   measurementId: "G-12BFK9CYH3"
 };
 
-// Inicializar Firebase (compat)
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* ---------- Función para guardar o actualizar en Firestore (ranking global) ---------- */
+/* ---- RANKING GLOBAL GUARDAR ---- */
 async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
   try {
     await db.collection("ranking").doc(nombre).set({
-      nombre: nombre,
+      nombre,
       tiempo_total: Number(tiempo_total) || 0,
       correctas: Number(correctas) || 0,
       incorrectas: Number(incorrectas) || 0,
       fecha: Date.now()
-    }, { merge: true });
-
-    console.log("✔ Puntaje guardado/actualizado en ranking global");
-  } catch (error) {
-    console.error("❌ Error guardando ranking:", error);
+    }, { merge:true });
+  } catch(e){
+    console.error("Error guardando ranking:",e);
   }
 }
 
+/* Sonidos */
+const sndCorrect=document.getElementById("sndCorrect");
+sndCorrect.src="data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
+const sndWrong=document.getElementById("sndWrong");
+sndWrong.src="data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
+const sndTime=document.getElementById("sndTime");
+sndTime.src="data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
 
-/* Sonidos (simples placeholders) */
-const sndCorrect = document.getElementById("sndCorrect");
-sndCorrect.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
-const sndWrong = document.getElementById("sndWrong");
-sndWrong.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
-const sndTime = document.getElementById("sndTime");
-sndTime.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
-
-/* ---------- MODAL ---------- */
-const modalOverlay = document.getElementById("modalOverlay");
-const modalMessage = document.getElementById("modalMessage");
-const modalOk = document.getElementById("modalOk");
-const modalCancel = document.getElementById("modalCancel");
-function showModal(message, withCancel=false){
-  modalMessage.innerHTML = message;
-  modalCancel.classList.toggle("hidden", !withCancel);
+/* Modal */
+const modalOverlay=document.getElementById("modalOverlay");
+const modalMessage=document.getElementById("modalMessage");
+const modalOk=document.getElementById("modalOk");
+const modalCancel=document.getElementById("modalCancel");
+function showModal(msg,withCancel=false){
+  modalMessage.innerHTML=msg;
+  modalCancel.classList.toggle("hidden",!withCancel);
   modalOverlay.classList.remove("hidden");
-  return new Promise(resolve=>{
-    modalOk.onclick = ()=>{ modalOverlay.classList.add("hidden"); resolve(true); };
-    modalCancel.onclick = ()=>{ modalOverlay.classList.add("hidden"); resolve(false); };
+  return new Promise(res=>{
+    modalOk.onclick=()=>{modalOverlay.classList.add("hidden");res(true);};
+    modalCancel.onclick=()=>{modalOverlay.classList.add("hidden");res(false);};
   });
 }
 
-/* ---------- UTIL ---------- */
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function formatNum(n){ return Number(n).toFixed(2); }
+/* Utils */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function formatNum(n){return Number(n).toFixed(2);}
 async function hashPin(pin){
-  const enc = new TextEncoder().encode(pin);
-  const buf = await crypto.subtle.digest('SHA-256', enc);
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  const enc=new TextEncoder().encode(pin);
+  const buf=await crypto.subtle.digest("SHA-256",enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
 
-/* ---------- STORAGE ---------- */
-const STATE_KEY = "quiz_v4_state";
-const LEADER_KEY = "quiz_v4_leaderboard";
-let state = { perfiles:{} };
-try{ state = JSON.parse(localStorage.getItem(STATE_KEY)) || state; }catch(e){}
-function saveState(){ localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+/* Storage */
+const STATE_KEY="quiz_v4_state";
+const LEADER_KEY="quiz_v4_leaderboard";
+let state={perfiles:{}};
+try{ state=JSON.parse(localStorage.getItem(STATE_KEY))||state;}catch(e){}
+function saveState(){ localStorage.setItem(STATE_KEY,JSON.stringify(state)); }
 
-let leaderboard = [];
-try{ leaderboard = JSON.parse(localStorage.getItem(LEADER_KEY)) || []; }catch(e){}
-function saveLeader(){ localStorage.setItem(LEADER_KEY, JSON.stringify(leaderboard)); }
+let leaderboard=[];
+try{ leaderboard=JSON.parse(localStorage.getItem(LEADER_KEY))||[];}catch(e){}
+function saveLeader(){ localStorage.setItem(LEADER_KEY,JSON.stringify(leaderboard)); }
 
-/* ---------- DOM refs ---------- */
-const profilesList = document.getElementById("profilesList");
-const inputProfile = document.getElementById("inputProfile");
-const btnCreateProfile = document.getElementById("btnCreateProfile");
-const mainContent = document.getElementById("mainContent");
-const leaderboardEl = document.getElementById("leaderboard");
-const btnGlobalRank = document.getElementById("btnGlobalRank");
-const themeToggle = document.getElementById("themeToggle");
+/* DOM */
+const profilesList=document.getElementById("profilesList");
+const inputProfile=document.getElementById("inputProfile");
+const btnCreateProfile=document.getElementById("btnCreateProfile");
+const mainContent=document.getElementById("mainContent");
+const leaderboardEl=document.getElementById("leaderboard");
+const btnGlobalRank=document.getElementById("btnGlobalRank");
+const themeToggle=document.getElementById("themeToggle");
 
-/* ---------- Preguntas (se cargan externamente) ---------- */
-let PREGUNTAS = null;
-let loadedQuestions = false;
+/* Preguntas */
+let PREGUNTAS=null;
+let loadedQuestions=false;
 async function loadQuestions(){
   try{
-    const r = await fetch("preguntas.json", {cache:"no-store"});
-    if(!r.ok) throw new Error("HTTP");
-    PREGUNTAS = await r.json();
-    loadedQuestions = true;
+    const r=await fetch("preguntas.json",{cache:"no-store"});
+    if(!r.ok)throw"Error";
+    PREGUNTAS=await r.json();
+    loadedQuestions=true;
   }catch(e){
-    showModal("⚠️ No se pudo cargar <strong>preguntas.json</strong>.<br>Verifica que el archivo existe en la misma carpeta del index.html.");
-    loadedQuestions = false;
+    loadedQuestions=false;
+    showModal("⚠️ No se pudo cargar <strong>preguntas.json</strong>.");
   }
 }
 loadQuestions();
 
-/* ---------- REBUILD leaderboard local desde perfiles (para mostrar al iniciar) ---------- */
+/* Leaderboard desde perfiles */
 function rebuildLocalLeaderboardFromProfiles(){
-  leaderboard = [];
+  leaderboard=[];
   for(const name of Object.keys(state.perfiles)){
-    const p = state.perfiles[name];
-    leaderboard.push({ name, tiempo_total: p.tiempo_total || 0 });
+    leaderboard.push({name, tiempo_total:state.perfiles[name].tiempo_total||0});
   }
-  leaderboard.sort((a,b)=>a.tiempo_total - b.tiempo_total);
+  leaderboard.sort((a,b)=>a.tiempo_total-b.tiempo_total);
   saveLeader();
 }
 
-/* ---------- Render Perfiles ---------- */
+/* Render perfiles */
 function renderProfiles(){
-  profilesList.innerHTML = "";
-  const keys = Object.keys(state.perfiles).sort();
-  if(keys.length === 0){
-    profilesList.innerHTML = '<div class="muted small">No hay perfiles aún.</div>';
+  profilesList.innerHTML="";
+  const keys=Object.keys(state.perfiles).sort();
+  if(!keys.length){
+    profilesList.innerHTML='<div class="muted small">No hay perfiles aún.</div>';
     return;
   }
   keys.forEach(name=>{
-    const p = state.perfiles[name];
-    const btn = document.createElement("button");
-    btn.className = "profile-btn";
-    btn.innerHTML = `
+    const p=state.perfiles[name];
+    const btn=document.createElement("button");
+    btn.className="profile-btn";
+    btn.innerHTML=`
       <div><strong>${esc(name)}</strong><div class="muted small">${p.nivel.toUpperCase()}</div></div>
       <div><div class="muted small">✔ ${p.correctas}</div><div class="muted small">✖ ${p.incorrectas}</div></div>
     `;
-    btn.onclick = ()=> promptPinAndEnter(name);
+    btn.onclick=()=>promptPinAndEnter(name);
     profilesList.appendChild(btn);
   });
 }
 
-/* ---------- Crear Perfil ---------- */
-btnCreateProfile.onclick = async ()=>{
-  const name = inputProfile.value.trim();
-  if(!name) return showModal("Ingresa un nombre válido.");
-  if(state.perfiles[name]) return showModal("Ese perfil ya existe.");
-
-  let pin = prompt("Crea un PIN de 4 dígitos:");
-  if(pin===null) return;
-  if(!/^\d{4}$/.test(pin)) return showModal("PIN inválido (debe ser 4 dígitos).");
-
-  const h = await hashPin(pin);
-  state.perfiles[name] = {
-    nivel:"basico",
-    correctas:0,
-    incorrectas:0,
-    tiempo_total:0,
-    total_respuestas:0,
-    idx_pregunta:0,
-    finished_all:false,
-    pinHash:h
+/* Crear perfil */
+btnCreateProfile.onclick=async()=>{
+  const name=inputProfile.value.trim();
+  if(!name)return showModal("Ingresa un nombre válido.");
+  if(state.perfiles[name])return showModal("Ese perfil ya existe.");
+  let pin=prompt("Crea un PIN de 4 dígitos:");
+  if(pin===null)return;
+  if(!/^\d{4}$/.test(pin))return showModal("PIN inválido.");
+  const h=await hashPin(pin);
+  state.perfiles[name]={
+    nivel:"basico", correctas:0, incorrectas:0, tiempo_total:0,
+    total_respuestas:0, idx_pregunta:0, finished_all:false, pinHash:h
   };
-  saveState();
-  rebuildLocalLeaderboardFromProfiles();
-  inputProfile.value = "";
-  renderProfiles();
-  renderLeaderboard();
-  showModal("Perfil creado correctamente.");
+  saveState(); rebuildLocalLeaderboardFromProfiles();
+  inputProfile.value=""; renderProfiles(); renderLeaderboard();
+  showModal("Perfil creado.");
 };
 
-/* ---------- Entrar con PIN ---------- */
+/* PIN */
 async function promptPinAndEnter(name){
-  const p = state.perfiles[name];
-  let pin = prompt("Ingresa el PIN de este perfil:");
-  if(pin===null) return;
-  if(!/^\d{4}$/.test(pin)){ showModal("PIN inválido."); return; }
-  const check = await hashPin(pin);
-  if(check !== p.pinHash){ showModal("PIN incorrecto."); return; }
+  const p=state.perfiles[name];
+  let pin=prompt("Ingresa el PIN:");
+  if(pin===null)return;
+  if(!/^\d{4}$/.test(pin))return showModal("PIN inválido.");
+  const h=await hashPin(pin);
+  if(h!==p.pinHash)return showModal("PIN incorrecto.");
   enterProfile(name);
 }
 
-/* ---------- UI Perfil ---------- */
-function enterProfile(name){
-  renderProfileMenu(name);
-}
+/* Perfil menu */
+function enterProfile(name){ renderProfileMenu(name); }
 
 function renderProfileMenu(name){
-  const p = state.perfiles[name];
-  const nivel = p.nivel;
-  const pregNivel = (PREGUNTAS && PREGUNTAS[nivel]) ? PREGUNTAS[nivel] : [];
+  const p=state.perfiles[name];
+  const pregNivel=PREGUNTAS&&PREGUNTAS[p.nivel]?PREGUNTAS[p.nivel]:[];
+  mainContent.innerHTML=`
+  <div class="card fade-in">
+    <h2>${esc(name)}</h2>
+    <p class="muted small">Nivel actual: ${p.nivel.toUpperCase()}</p>
 
-  mainContent.innerHTML = `
-    <div class="card fade-in">
-      <h2>${esc(name)}</h2>
-      <p class="muted small">Nivel actual: ${nivel.toUpperCase()}</p>
-
-      <div class="card" style="margin-top:10px">
-        <div class="muted small">Correctas: ${p.correctas}</div>
-        <div class="muted small">Incorrectas: ${p.incorrectas}</div>
-        <div class="muted small">Tiempo total: ${formatNum(p.tiempo_total)}s</div>
-        <div class="muted small">Promedio por pregunta: ${
-          p.total_respuestas ? formatNum(p.tiempo_total/p.total_respuestas) : "0.00"
-        } s</div>
-        <div class="muted small">Posición: ${p.idx_pregunta}/${pregNivel.length}</div>
-      </div>
-
-      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
-        <button id="btnContinue" class="btn accent">▶ Continuar</button>
-        <button id="btnNew" class="btn ghost">🔁 Nuevo juego</button>
-        <button id="btnAny" class="btn ghost" ${p.finished_all?"":"disabled"}>⭐ Nivel libre</button>
-        <button id="btnBack" class="btn ghost">🔙 Cerrar</button>
-      </div>
+    <div class="card" style="margin-top:10px">
+      <div class="muted small">Correctas: ${p.correctas}</div>
+      <div class="muted small">Incorrectas: ${p.incorrectas}</div>
+      <div class="muted small">Tiempo total: ${formatNum(p.tiempo_total)}s</div>
+      <div class="muted small">Promedio por pregunta: ${
+        p.total_respuestas?formatNum(p.tiempo_total/p.total_respuestas):"0.00"
+      } s</div>
+      <div class="muted small">Posición: ${p.idx_pregunta}/${pregNivel.length}</div>
     </div>
+
+    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+      <button id="btnContinue" class="btn accent">▶ Continuar</button>
+      <button id="btnNew" class="btn ghost">🔁 Nuevo juego</button>
+      <button id="btnAny" class="btn ghost" ${p.finished_all?"":"disabled"}>⭐ Nivel libre</button>
+      <button id="btnBack" class="btn ghost">🔙 Cerrar</button>
+    </div>
+  </div>
   `;
-
-  document.getElementById("btnContinue").onclick = ()=> startLevel(name,false);
-  document.getElementById("btnNew").onclick = ()=> startLevel(name,true);
-  document.getElementById("btnBack").onclick = ()=> showHome();
-
-  document.getElementById("btnAny").onclick = ()=>{
-    if(!p.finished_all){ showModal("Debes completar todos los niveles primero."); return; }
-    let lvl = prompt("Nivel (basico/medio/avanzado):");
-    if(!lvl) return;
-    lvl = lvl.toLowerCase();
-    if(!["basico","medio","avanzado"].includes(lvl)){ showModal("Nivel inválido."); return; }
-    p.nivel = lvl;
-    p.correctas = 0; p.incorrectas = 0; p.tiempo_total = 0; p.total_respuestas = 0; p.idx_pregunta = 0; p.finished_all = false;
-    saveState();
-    startLevel(name,true);
+  document.getElementById("btnContinue").onclick=()=>startLevel(name,false);
+  document.getElementById("btnNew").onclick=()=>startLevel(name,true);
+  document.getElementById("btnBack").onclick=showHome;
+  document.getElementById("btnAny").onclick=()=>{
+    if(!p.finished_all)return showModal("Debes completar todos los niveles.");
+    let lvl=prompt("Nivel (basico/medio/avanzado):"); if(!lvl)return;
+    lvl=lvl.toLowerCase();
+    if(!["basico","medio","avanzado"].includes(lvl))return showModal("Nivel inválido.");
+    p.nivel=lvl; p.correctas=0; p.incorrectas=0; p.tiempo_total=0;
+    p.total_respuestas=0; p.idx_pregunta=0; p.finished_all=false;
+    saveState(); startLevel(name,true);
   };
 }
 
-/* ---------- Home ---------- */
+/* Home */
 function showHome(){
-  mainContent.innerHTML = `
-    <div class="card fade-in">
-      <h2>Bienvenido 👋</h2>
-      <p class="muted">Selecciona o crea un perfil para comenzar.</p>
-    </div>
+  mainContent.innerHTML=`
+    <div class="card fade-in"><h2>Bienvenido 👋</h2>
+    <p class="muted">Selecciona o crea un perfil.</p></div>
     <div class="card fade-in" style="margin-top:12px">
       <h3>Ranking local</h3>
       <div id="leaderboard" class="leaderboard muted"></div>
@@ -372,72 +349,58 @@ function showHome(){
   renderLeaderboard();
 }
 
-/* ---------- Juego ---------- */
-let session = {};
+/* Juego */
+let session={};
 
-function startLevel(name, reset){
-  if(!loadedQuestions){
-    showModal("Preguntas no cargadas.");
-    return;
-  }
-  const stats = state.perfiles[name];
-  const nivel = stats.nivel;
-  session.lista = PREGUNTAS[nivel] ? [...PREGUNTAS[nivel]] : [];
-  if(reset) stats.idx_pregunta = 0;
-  session.idx = stats.idx_pregunta || 0;
-  session.counters = {correctas:0, incorrectas:0, omitidas:0};
-  session.timer = null;
+function startLevel(name,reset){
+  if(!loadedQuestions)return showModal("Preguntas no cargadas.");
+  const stats=state.perfiles[name];
+  session.lista=[...PREGUNTAS[stats.nivel]];
+  if(reset)stats.idx_pregunta=0;
+  session.idx=stats.idx_pregunta||0;
+  session.counters={correctas:0,incorrectas:0,omitidas:0};
   renderQuestion(name);
 }
 
-/* ---------- Render Pregunta ---------- */
+/* Render pregunta */
 function renderQuestion(name){
   clearInterval(session.timer);
-  const p = session.lista[session.idx];
-  if(!p){
-    finishLevel(name);
-    return;
-  }
+  const p=session.lista[session.idx];
+  if(!p)return finishLevel(name);
 
-  session.remaining = 60;
-  session.startTime = Date.now();
+  session.remaining=60;
+  session.startTime=Date.now();
 
-  mainContent.innerHTML = `
+  mainContent.innerHTML=`
     <div class="card fade-in">
       <h3 class="question">${esc(p.pregunta)}</h3>
       <div id="opts" class="options"></div>
       <div class="controls" style="margin-top:12px; display:flex; gap:8px">
         <button id="btnSkip" class="btn ghost small">⏭ Omitir</button>
-        <button id="btnSave" class="btn ghost small">💾 Guardar</button>
         <button id="btnBack" class="btn ghost small">🔙 Volver</button>
       </div>
-      <div class="timerbar">
-        <div id="timerFill" class="timerfill"></div>
-      </div>
+      <div class="timerbar"><div id="timerFill" class="timerfill"></div></div>
       <p class="muted small">⏱ Tiempo restante: <span id="timeTxt">60</span>s</p>
     </div>
   `;
 
-  const opts = document.getElementById("opts");
+  const opts=document.getElementById("opts");
   p.opciones.forEach((op,i)=>{
-    const b = document.createElement("button");
-    b.className = "option-btn";
-    b.textContent = `${String.fromCharCode(65+i)}. ${op}`;
-    b.onclick = ()=> answer(name,op,b);
+    const b=document.createElement("button");
+    b.className="option-btn";
+    b.textContent=`${String.fromCharCode(65+i)}. ${op}`;
+    b.onclick=()=>answer(name,op,b);
     opts.appendChild(b);
   });
 
-  document.getElementById("btnSkip").onclick = ()=> skip(name);
-  document.getElementById("btnSave").onclick = ()=>{ saveState(); showModal("Guardado."); };
-  document.getElementById("btnBack").onclick = ()=>{ clearInterval(session.timer); renderProfileMenu(name); };
+  document.getElementById("btnSkip").onclick=()=>skip(name);
+  document.getElementById("btnBack").onclick=()=>{clearInterval(session.timer);renderProfileMenu(name);};
 
-  session.timer = setInterval(()=>{
+  session.timer=setInterval(()=>{
     session.remaining--;
-    const timeTxt = document.getElementById("timeTxt");
-    const timerFill = document.getElementById("timerFill");
-    if(timeTxt) timeTxt.textContent = session.remaining;
-    if(timerFill) timerFill.style.width = (session.remaining/60*100) + "%";
-    if(session.remaining <= 0){
+    document.getElementById("timeTxt").textContent=session.remaining;
+    document.getElementById("timerFill").style.width=(session.remaining/60*100)+"%";
+    if(session.remaining<=0){
       clearInterval(session.timer);
       sndTime.play();
       timeOut(name);
@@ -445,82 +408,80 @@ function renderQuestion(name){
   },1000);
 }
 
-/* ---------- Responder: SIN modal de correcto/incorrecto,
-   sólo colores y sonido. Espera 5s antes de siguiente. ---------- */
+/* === RESPUESTA === */
 function answer(name, op, btnEl){
   clearInterval(session.timer);
 
-  const p = session.lista[session.idx];
-  const stats = state.perfiles[name];
-  const t = (Date.now() - session.startTime)/1000;
-  stats.tiempo_total += t;
+  const p=session.lista[session.idx];
+  const stats=state.perfiles[name];
+  const t=(Date.now()-session.startTime)/1000;
+
+  stats.tiempo_total+=t;
   stats.total_respuestas++;
 
-  // Deshabilitar todas las opciones para evitar clicks adicionales
-  const allButtons = Array.from(document.querySelectorAll(".option-btn"));
-  allButtons.forEach(b=> b.disabled = true);
+  const buttons=[...document.querySelectorAll(".option-btn")];
+  buttons.forEach(b=>b.disabled=true);
 
-  if(op === p.respuesta){
+  if(op===p.respuesta){
     sndCorrect.play();
     btnEl.classList.add("correct");
     session.counters.correctas++;
     stats.correctas++;
-    // NO modal aquí (usuario pidió eliminar alerta correcta/incorrecta)
-  } else {
+  }else{
     sndWrong.play();
     btnEl.classList.add("wrong");
     session.counters.incorrectas++;
     stats.incorrectas++;
-    // NO modal aquí
-    // opcional: marcar la respuesta correcta visualmente
-    const correctBtn = allButtons.find(b => b.textContent.includes(p.respuesta));
-    if(correctBtn) correctBtn.classList.add("correct");
+    const correctBtn=buttons.find(b=>b.textContent.includes(p.respuesta));
+    if(correctBtn)correctBtn.classList.add("correct");
   }
 
   session.idx++;
-  stats.idx_pregunta = session.idx;
-  saveState();
+  stats.idx_pregunta=session.idx;
 
-  // Esperar 5 segundos antes de siguiente pregunta
-  setTimeout(()=> {
-    // NOTA: si el usuario ha terminado todas las preguntas, renderQuestion lo detectará
-    renderQuestion(name);
-  }, 5000);
+  saveState();
+  guardarEnRankingGlobal(name,stats.tiempo_total,stats.correctas,stats.incorrectas);
+
+  setTimeout(()=>renderQuestion(name),2500);
 }
 
-/* ---------- Omitir ---------- */
+/* Omitir */
 function skip(name){
   clearInterval(session.timer);
+  const stats=state.perfiles[name];
   session.counters.omitidas++;
   session.idx++;
-  state.perfiles[name].idx_pregunta = session.idx;
+  stats.idx_pregunta=session.idx;
   saveState();
+  guardarEnRankingGlobal(name,stats.tiempo_total,stats.correctas,stats.incorrectas);
   renderQuestion(name);
 }
 
-/* ---------- Timeout ---------- */
+/* Timeout */
 function timeOut(name){
-  const stats = state.perfiles[name];
-  stats.tiempo_total += 60;
+  const stats=state.perfiles[name];
+  stats.tiempo_total+=60;
   stats.total_respuestas++;
   stats.incorrectas++;
   session.counters.incorrectas++;
   session.idx++;
-  stats.idx_pregunta = session.idx;
-  saveState();
+  stats.idx_pregunta=session.idx;
 
-  showModal("⏳ Tiempo agotado. Se marca incorrecta.");
+  saveState();
+  guardarEnRankingGlobal(name,stats.tiempo_total,stats.correctas,stats.incorrectas);
+
+  showModal("⏳ Tiempo agotado.");
   renderQuestion(name);
 }
 
-/* ---------- Fin nivel ---------- */
+/* Fin del nivel */
 function finishLevel(name){
   clearInterval(session.timer);
-  const stats = state.perfiles[name];
-  const total = session.lista.length;
-  const score = (session.counters.correctas/total)*100;
+  const stats=state.perfiles[name];
+  const total=session.lista.length;
+  const score=(session.counters.correctas/total)*100;
 
-  let msg = `
+  let msg=`
     <strong>Resultados:</strong><br>
     ✔ Correctas: ${session.counters.correctas}<br>
     ✖ Incorrectas: ${session.counters.incorrectas}<br>
@@ -528,27 +489,19 @@ function finishLevel(name){
     <strong>Puntaje:</strong> ${score.toFixed(2)}%
   `;
 
-  if(score >= 80){
-    msg += "<br><br>🎉 ¡Aprobaste!";
-    if(stats.nivel === "basico") stats.nivel="medio";
-    else if(stats.nivel==="medio") stats.nivel="avanzado";
-    else stats.finished_all = true;
+  if(score>=80){
+    msg+="<br><br>🎉 ¡Aprobaste!";
+    if(stats.nivel==="basico")stats.nivel="medio";
+    else if(stats.nivel==="medio")stats.nivel="avanzado";
+    else stats.finished_all=true;
     stats.idx_pregunta=0;
-  } else {
-    msg += "<br><br>🔁 No alcanzaste el 80%. Repite el nivel.";
+  }else{
+    msg+="<br><br>🔁 No alcanzaste el 80%.";
   }
 
   saveState();
-  // Actualiza leaderboard local y lo muestra
-  updateLeaderboard(name, stats.tiempo_total);
+  updateLeaderboard(name,stats.tiempo_total);
   rebuildLocalLeaderboardFromProfiles();
-
-  // Guardar en Ranking global (no bloqueante)
-  try {
-    guardarEnRankingGlobal(name, stats.tiempo_total, stats.correctas, stats.incorrectas);
-  } catch(e){
-    console.warn("No se pudo guardar en ranking global:", e);
-  }
 
   showModal(msg);
   renderProfiles();
@@ -556,31 +509,26 @@ function finishLevel(name){
   renderProfileMenu(name);
 }
 
-/* ---------- Ranking local ---------- */
-function updateLeaderboard(name, tiempo){
-  const i = leaderboard.findIndex(x=>x.name===name);
-  if(i>=0) leaderboard[i].tiempo_total = tiempo;
-  else leaderboard.push({name, tiempo_total:tiempo});
-  leaderboard.sort((a,b)=>a.tiempo_total - b.tiempo_total);
+/* Local leaderboard */
+function updateLeaderboard(name,tiempo){
+  const i=leaderboard.findIndex(x=>x.name===name);
+  if(i>=0)leaderboard[i].tiempo_total=tiempo;
+  else leaderboard.push({name,tiempo_total:tiempo});
+  leaderboard.sort((a,b)=>a.tiempo_total-b.tiempo_total);
   saveLeader();
 }
 
 function renderLeaderboard(){
-  // Si no hay items en leaderboard, tratar de reconstruir desde perfiles
-  if(!leaderboard || leaderboard.length===0){
-    rebuildLocalLeaderboardFromProfiles();
-  }
-
-  leaderboardEl.innerHTML = "";
-  if(leaderboard.length===0){
-    leaderboardEl.innerHTML = "<div class='muted small'>Sin datos aún.</div>";
+  if(!leaderboard.length)rebuildLocalLeaderboardFromProfiles();
+  leaderboardEl.innerHTML="";
+  if(!leaderboard.length){
+    leaderboardEl.innerHTML="<div class='muted small'>Sin datos aún.</div>";
     return;
   }
-
   leaderboard.forEach((r,i)=>{
-    const row = document.createElement("div");
-    row.className = "leader-row";
-    row.innerHTML = `
+    const row=document.createElement("div");
+    row.className="leader-row";
+    row.innerHTML=`
       <div>${i+1}. <strong>${esc(r.name)}</strong></div>
       <div>${formatNum(r.tiempo_total)}s</div>
     `;
@@ -588,64 +536,48 @@ function renderLeaderboard(){
   });
 }
 
-/* ---------- Ranking global: lectura (top 30 asc por tiempo) ---------- */
-function cargarRankingGlobal() {
-  const ref = db.collection("ranking")
-    .orderBy("tiempo_total", "asc")
-    .limit(30);
-
-  ref.onSnapshot((snap) => {
-
-    if (snap.empty) {
-      showModal("🌍<br>No hay datos en el ranking global.");
-      return;
-    }
-
-    let html = "";
-    let pos = 1;
-
-    snap.forEach(doc => {
-      const d = doc.data();
-      html += `
+/* Ranking global */
+function cargarRankingGlobal(){
+  db.collection("ranking")
+  .orderBy("tiempo_total","asc")
+  .limit(30)
+  .onSnapshot(snap=>{
+    if(snap.empty)return showModal("🌍 No hay datos.");
+    let html="",pos=1;
+    snap.forEach(doc=>{
+      const d=doc.data();
+      html+=`
         <div class="leader-row">
-          <div>${pos}. <strong>${esc(d.nombre || "Anon")}</strong></div>
+          <div>${pos}. <strong>${esc(d.nombre)}</strong></div>
           <div>
-            <div>${formatNum(d.tiempo_total || 0)}s</div>
-            <div class="muted small">✔ ${d.correctas || 0} ✖ ${d.incorrectas || 0}</div>
+            <div>${formatNum(d.tiempo_total)}s</div>
+            <div class="muted small">✔ ${d.correctas} ✖ ${d.incorrectas}</div>
           </div>
         </div>`;
       pos++;
     });
-
-    modalMessage.innerHTML = `
+    modalMessage.innerHTML=`
       <h3>🌍 Ranking Global</h3>
-      <div style="margin-top:12px; max-height:300px; overflow-y:auto;">
-        ${html}
-      </div>
+      <div style="margin-top:12px;max-height:300px;overflow-y:auto;">${html}</div>
     `;
-
     modalCancel.classList.add("hidden");
     modalOverlay.classList.remove("hidden");
-    modalOk.onclick = () => modalOverlay.classList.add("hidden");
-
-  }, (err) => {
-    console.error("Error en listener:", err);
-    showModal("❌ No se pudo cargar el ranking global.");
+    modalOk.onclick=()=>modalOverlay.classList.add("hidden");
   });
 }
+btnGlobalRank.onclick=cargarRankingGlobal;
 
-btnGlobalRank.onclick = cargarRankingGlobal;
-
-/* ---------- Tema ---------- */
-themeToggle.onchange = ()=> {
-  if(themeToggle.checked) document.documentElement.classList.add("light");
+/* Tema */
+themeToggle.onchange=()=>{
+  if(themeToggle.checked)document.documentElement.classList.add("light");
   else document.documentElement.classList.remove("light");
 };
 
-/* ---------- Inicial ---------- */
+/* Inicial */
 rebuildLocalLeaderboardFromProfiles();
 renderProfiles();
 renderLeaderboard();
 </script>
+
 </body>
 </html>
