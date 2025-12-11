@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Quiz Inglés</title>
-
 <style>
+/* (tu CSS tal cual lo tenías) */
 :root {
   --bg:#071226;
   --panel:#0f1724;
@@ -17,7 +17,6 @@
   --danger:#ef4444;
   --glass:rgba(255,255,255,0.03);
 }
-
 .light {
   --bg:#f3f6fb;
   --panel:#ffffff;
@@ -27,318 +26,57 @@
   --accent:#2563eb;
   --glass:rgba(0,0,0,0.04);
 }
-
-/* ========================= */
-/*         BASE              */
-/* ========================= */
 *{ box-sizing:border-box; }
-html, body {
-  margin:0;
-  font-family:Inter, "Segoe UI", sans-serif;
-  background:var(--bg);
-  color:var(--fg);
-  height:100%;
-}
-
-body {
-  padding:20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.app {
-  width:100%;
-  max-width:1150px;
-  min-height:600px;
-  padding:18px;
-  border-radius:14px;
-  background:var(--panel);
-  box-shadow:0 18px 45px rgba(0,0,0,0.45);
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:18px;
-}
-
-/* ========================= */
-/*         HEADER            */
-/* ========================= */
-header {
-  grid-column:1 / -1;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.brand h1 {
-  margin:0;
-  font-size:22px;
-}
-
-.brand-sub {
-  font-size:13px;
-  color:var(--muted);
-}
-
-.theme-area {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-}
-
-/* ========================= */
-/*         SIDEBAR           */
-/* ========================= */
-.profiles-panel {
-  background:var(--card);
-  padding:14px;
-  border-radius:10px;
-}
-
+html, body { margin:0; font-family:Inter, "Segoe UI", sans-serif; background:var(--bg); color:var(--fg); height:100%; }
+body { padding:20px; display:flex; justify-content:center; align-items:center; }
+.app { width:100%; max-width:1150px; min-height:600px; padding:18px; border-radius:14px; background:var(--panel); box-shadow:0 18px 45px rgba(0,0,0,0.45); display:grid; grid-template-columns:320px 1fr; gap:18px; }
+header { grid-column:1 / -1; display:flex; justify-content:space-between; align-items:center; }
+.brand h1 { margin:0; font-size:22px; }
+.brand-sub { font-size:13px; color:var(--muted); }
+.theme-area { display:flex; align-items:center; gap:10px; color:var(--muted); }
+.profiles-panel { background:var(--card); padding:14px; border-radius:10px; }
 .profiles-panel h2 { margin:0 0 8px 0; }
-
-.profiles-list {
-  max-height:350px;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.profile-btn {
-  border:1px solid var(--glass);
-  background:transparent;
-  color:var(--fg);
-  padding:10px;
-  border-radius:10px;
-  text-align:left;
-  cursor:pointer;
-  transition:0.15s;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.profile-btn:hover {
-  background:var(--glass);
-  transform:translateY(-2px);
-}
-
-/* Crear perfil */
-.create-row {
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-
-.create-row input {
-  padding:8px;
-  border-radius:8px;
-  border:1px solid var(--glass);
-  background:transparent;
-  color:var(--fg);
-}
-
-.rank-tools {
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-
-.info-pin {
-  margin-top:12px;
-}
-
-/* ========================= */
-/*         MAIN PANEL        */
-/* ========================= */
-.main-panel {
-  background:var(--card);
-  padding:18px;
-  border-radius:10px;
-  overflow-y:auto;
-}
-
-.card {
-  background:var(--glass);
-  padding:14px;
-  border-radius:10px;
-}
-
-.leaderboard {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.leader-row {
-  display:flex;
-  justify-content:space-between;
-  padding:8px;
-  background:var(--glass);
-  border-radius:8px;
-}
-
-/* ========================= */
-/*         BUTTONS           */
-/* ========================= */
-.btn {
-  padding:8px 12px;
-  border:0;
-  cursor:pointer;
-  border-radius:8px;
-  font-size:14px;
-}
-
-.accent {
-  background:var(--accent);
-  color:white;
-  box-shadow:0 0 12px rgba(59,130,246,0.4);
-}
-
-.ghost {
-  border:1px solid var(--glass);
-  background:transparent;
-  color:var(--fg);
-}
-
+.profiles-list { max-height:350px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; }
+.profile-btn { border:1px solid var(--glass); background:transparent; color:var(--fg); padding:10px; border-radius:10px; text-align:left; cursor:pointer; transition:0.15s; display:flex; justify-content:space-between; align-items:center; }
+.profile-btn:hover { background:var(--glass); transform:translateY(-2px); }
+.create-row { margin-top:12px; display:flex; gap:8px; }
+.create-row input { padding:8px; border-radius:8px; border:1px solid var(--glass); background:transparent; color:var(--fg); }
+.rank-tools { margin-top:12px; display:flex; gap:8px; }
+.info-pin { margin-top:12px; }
+.main-panel { background:var(--card); padding:18px; border-radius:10px; overflow-y:auto; }
+.card { background:var(--glass); padding:14px; border-radius:10px; }
+.leaderboard { display:flex; flex-direction:column; gap:8px; }
+.leader-row { display:flex; justify-content:space-between; padding:8px; background:var(--glass); border-radius:8px; }
+.btn { padding:8px 12px; border:0; cursor:pointer; border-radius:8px; font-size:14px; }
+.accent { background:var(--accent); color:white; box-shadow:0 0 12px rgba(59,130,246,0.4); }
+.ghost { border:1px solid var(--glass); background:transparent; color:var(--fg); }
 .small { font-size:13px; }
-
-/* ========================= */
-/*         QUESTIONS         */
-/* ========================= */
-.question {
-  font-size:19px;
-  margin:8px 0 14px 0;
-}
-
-.options {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.option-btn {
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--glass);
-  background:transparent;
-  color:var(--fg);
-  cursor:pointer;
-  font-size:15px;
-  text-align:left;
-  transition:0.15s;
-}
-
-.option-btn:hover {
-  background:var(--glass);
-  transform:translateY(-3px);
-}
-
-.option-btn.correct {
-  background:rgba(16,185,129,0.18);
-  border-left:4px solid var(--good);
-}
-
-.option-btn.wrong {
-  background:rgba(239,68,68,0.18);
-  border-left:4px solid var(--danger);
-}
-
-/* Timer */
-.timerbar {
-  height:10px;
-  background:var(--glass);
-  border-radius:6px;
-  overflow:hidden;
-  margin-top:12px;
-}
-
-.timerfill {
-  height:100%;
-  background:linear-gradient(90deg,var(--accent), #60a5fa);
-  width:100%;
-  transition:width 1s linear;
-}
-
-/* ========================= */
-/*           MODAL           */
-/* ========================= */
-.modal-overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-
-.modal-window {
-  background:var(--card);
-  width:350px;
-  max-width:90%;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.5);
-}
-
-.modal-message {
-  margin-bottom:14px;
-  font-size:15px;
-}
-
-.modal-actions {
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-}
-
+.question { font-size:19px; margin:8px 0 14px 0; }
+.options { display:flex; flex-direction:column; gap:10px; }
+.option-btn { padding:12px; border-radius:10px; border:1px solid var(--glass); background:transparent; color:var(--fg); cursor:pointer; font-size:15px; text-align:left; transition:0.15s; }
+.option-btn:hover { background:var(--glass); transform:translateY(-3px); }
+.option-btn.correct { background:rgba(16,185,129,0.18); border-left:4px solid var(--good); }
+.option-btn.wrong { background:rgba(239,68,68,0.18); border-left:4px solid var(--danger); }
+.timerbar { height:10px; background:var(--glass); border-radius:6px; overflow:hidden; margin-top:12px; }
+.timerfill { height:100%; background:linear-gradient(90deg,var(--accent), #60a5fa); width:100%; transition:width 1s linear; }
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:999; }
+.modal-window { background:var(--card); width:350px; max-width:90%; border-radius:12px; padding:18px; box-shadow:0 18px 40px rgba(0,0,0,0.5); }
+.modal-message { margin-bottom:14px; font-size:15px; }
+.modal-actions { display:flex; justify-content:flex-end; gap:10px; }
 .hidden { display:none !important; }
-
-/* ========================= */
-/*      ANIMACIONES          */
-/* ========================= */
 .fade-in { animation:fadeIn .35s ease both; }
 .slide-up { animation:slideUp .45s ease both; }
 .scale-in { animation:scaleIn .35s ease both; }
-
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(10px);}
-  to {opacity:1; transform:none;}
-}
-@keyframes slideUp {
-  from {opacity:0; transform:translateY(16px);}
-  to {opacity:1; transform:none;}
-}
-@keyframes scaleIn {
-  from {opacity:0; transform:scale(0.8);}
-  to {opacity:1; transform:scale(1);}
-}
-
-/* ========================= */
-/*       RESPONSIVE          */
-/* ========================= */
-@media (max-width:900px){
-  .app {
-    grid-template-columns:1fr;
-    padding:12px;
-  }
-  .profiles-panel { order:2; }
-  .main-panel { order:1; }
-}
-
+@keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
+@keyframes slideUp { from {opacity:0; transform:translateY(16px);} to {opacity:1; transform:none;} }
+@keyframes scaleIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
+@media (max-width:900px){ .app { grid-template-columns:1fr; padding:12px; } .profiles-panel { order:2; } .main-panel { order:1; } }
 </style>
-
 </head>
 <body>
 <div class="app">
   <header class="fade-in">
-    <div class="brand">
-      <h1>Quiz Inglés </h1>
-    </div>
-
+    <div class="brand"><h1>Quiz Inglés </h1></div>
     <div class="theme-area">
       <label>Tema claro</label>
       <input id="themeToggle" type="checkbox">
@@ -347,31 +85,22 @@ header {
 
   <aside class="profiles-panel slide-up">
     <h2>Perfiles</h2>
-
     <div id="profilesList" class="profiles-list"></div>
-
     <div class="create-row">
       <input id="inputProfile" placeholder="Nombre del jugador">
       <button id="btnCreateProfile" class="btn accent">➕ Crear</button>
     </div>
-
     <div class="rank-tools">
       <button id="btnGlobalRank" class="btn accent small">🌍 Ranking global</button>
     </div>
-
-    <div class="muted small info-pin">
-      Se utiliza un PIN numérico de 4 dígitos para entrar al perfil.
-    </div>
+    <div class="muted small info-pin">Se utiliza un PIN numérico de 4 dígitos para entrar al perfil.</div>
   </aside>
 
   <main class="main-panel slide-up" id="mainPanel">
     <div id="mainContent">
       <div class="card fade-in">
         <h2>Bienvenido 👋</h2>
-        <p class="muted">
-          Selecciona o crea un perfil.  
-          El ranking refleja el tiempo acumulado (menor = mejor).
-        </p>
+        <p class="muted">Selecciona o crea un perfil. El ranking refleja el tiempo acumulado (menor = mejor).</p>
       </div>
 
       <div class="card fade-in" style="margin-top:12px">
@@ -380,7 +109,6 @@ header {
       </div>
     </div>
   </main>
-
 </div>
 
 <div id="modalOverlay" class="modal-overlay hidden">
@@ -396,40 +124,38 @@ header {
 <audio id="sndCorrect"></audio>
 <audio id="sndWrong"></audio>
 <audio id="sndTime"></audio>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<!-- USAMOS las versiones "compat" para que firebase.initializeApp() y firebase.firestore() funcionen desde un HTML simple -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
-  // Tu configuración correcta
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "quizenglish.firebaseapp.com",
-    projectId: "quizenglish",
-    storageBucket: "quizenglish.appspot.com",
-    messagingSenderId: "410235271295",
-    appId: "1:410235271295:web:5562e80248cebc5b02e0bb"
-  };
+/* ===========================
+   CONFIG FIREBASE (usa tus credenciales)
+   =========================== */
+/* Usé las credenciales que pusiste al principio en tu mensaje */
+const firebaseConfig = {
+  apiKey: "AIzaSyAoYaWXxQhqe7FZbyA_qBE3Hz6iJgONV3c",
+  authDomain: "quizenglish-f4708.firebaseapp.com",
+  projectId: "quizenglish-f4708",
+  storageBucket: "quizenglish-f4708.appspot.com", // corregido formato
+  messagingSenderId: "992301935930",
+  appId: "1:992301935930:web:bd3965a3dabf8937743403",
+  measurementId: "G-12BFK9CYH3"
+};
 
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
+// Inicializar Firebase (compat)
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  // Inicializar Firestore
-  const db = firebase.firestore();
-</script>
-
-
-<script>
+/* ---------- Función para guardar en Firestore (ranking global) ---------- */
 async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
   try {
     await db.collection("ranking").add({
       nombre: nombre,
-      tiempo_total: tiempo_total,
-      correctas: correctas,
-      incorrectas: incorrectas,
+      tiempo_total: Number(tiempo_total) || 0,
+      correctas: Number(correctas) || 0,
+      incorrectas: Number(incorrectas) || 0,
       fecha: Date.now()
     });
     console.log("✔ Puntaje guardado en ranking global");
@@ -438,50 +164,32 @@ async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrect
   }
 }
 
-
+/* Sonidos (simples placeholders) */
 const sndCorrect = document.getElementById("sndCorrect");
-sndCorrect.src =
-"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="; 
-// sonido simple click ok
-
+sndCorrect.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
 const sndWrong = document.getElementById("sndWrong");
-sndWrong.src =
-"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
-// sonido simple error (puedes reemplazar luego por otro)
-
+sndWrong.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
 const sndTime = document.getElementById("sndTime");
-sndTime.src =
-"data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
-// sonido simple timeout
+sndTime.src = "data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=";
 
-/* ---------- MODAL BONITO ---------- */
+/* ---------- MODAL ---------- */
 const modalOverlay = document.getElementById("modalOverlay");
-const modalWindow = document.getElementById("modalWindow");
 const modalMessage = document.getElementById("modalMessage");
 const modalOk = document.getElementById("modalOk");
 const modalCancel = document.getElementById("modalCancel");
-
-function showModal(message, withCancel = false) {
+function showModal(message, withCancel=false){
   modalMessage.innerHTML = message;
-  modalOverlay.classList.remove("hidden");
   modalCancel.classList.toggle("hidden", !withCancel);
-  return new Promise(resolve => {
-    modalOk.onclick = () => {
-      modalOverlay.classList.add("hidden");
-      resolve(true);
-    };
-    modalCancel.onclick = () => {
-      modalOverlay.classList.add("hidden");
-      resolve(false);
-    };
+  modalOverlay.classList.remove("hidden");
+  return new Promise(resolve=>{
+    modalOk.onclick = ()=>{ modalOverlay.classList.add("hidden"); resolve(true); };
+    modalCancel.onclick = ()=>{ modalOverlay.classList.add("hidden"); resolve(false); };
   });
 }
 
-/* ---------- UTILIDADES ---------- */
+/* ---------- UTIL ---------- */
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function formatNum(n){ return Number(n).toFixed(2); }
-
-/* --- hash PIN --- */
 async function hashPin(pin){
   const enc = new TextEncoder().encode(pin);
   const buf = await crypto.subtle.digest('SHA-256', enc);
@@ -491,7 +199,6 @@ async function hashPin(pin){
 /* ---------- STORAGE ---------- */
 const STATE_KEY = "quiz_v4_state";
 const LEADER_KEY = "quiz_v4_leaderboard";
-
 let state = { perfiles:{} };
 try{ state = JSON.parse(localStorage.getItem(STATE_KEY)) || state; }catch(e){}
 function saveState(){ localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
@@ -500,24 +207,22 @@ let leaderboard = [];
 try{ leaderboard = JSON.parse(localStorage.getItem(LEADER_KEY)) || []; }catch(e){}
 function saveLeader(){ localStorage.setItem(LEADER_KEY, JSON.stringify(leaderboard)); }
 
-/* ---------- DOM ---------- */
+/* ---------- DOM refs ---------- */
 const profilesList = document.getElementById("profilesList");
 const inputProfile = document.getElementById("inputProfile");
 const btnCreateProfile = document.getElementById("btnCreateProfile");
 const mainContent = document.getElementById("mainContent");
 const leaderboardEl = document.getElementById("leaderboard");
-/* btnExport and btnImport were removed */
 const btnGlobalRank = document.getElementById("btnGlobalRank");
 const themeToggle = document.getElementById("themeToggle");
 
-/* ---------- Cargar preguntas desde archivo externo ---------- */
+/* ---------- Preguntas (se cargan externamente) ---------- */
 let PREGUNTAS = null;
 let loadedQuestions = false;
-
 async function loadQuestions(){
   try{
     const r = await fetch("preguntas.json", {cache:"no-store"});
-    if(!r.ok) throw new Error("Error HTTP");
+    if(!r.ok) throw new Error("HTTP");
     PREGUNTAS = await r.json();
     loadedQuestions = true;
   }catch(e){
@@ -526,6 +231,17 @@ async function loadQuestions(){
   }
 }
 loadQuestions();
+
+/* ---------- REBUILD leaderboard local desde perfiles (para mostrar al iniciar) ---------- */
+function rebuildLocalLeaderboardFromProfiles(){
+  leaderboard = [];
+  for(const name of Object.keys(state.perfiles)){
+    const p = state.perfiles[name];
+    leaderboard.push({ name, tiempo_total: p.tiempo_total || 0 });
+  }
+  leaderboard.sort((a,b)=>a.tiempo_total - b.tiempo_total);
+  saveLeader();
+}
 
 /* ---------- Render Perfiles ---------- */
 function renderProfiles(){
@@ -559,7 +275,6 @@ btnCreateProfile.onclick = async ()=>{
   if(!/^\d{4}$/.test(pin)) return showModal("PIN inválido (debe ser 4 dígitos).");
 
   const h = await hashPin(pin);
-
   state.perfiles[name] = {
     nivel:"basico",
     correctas:0,
@@ -570,31 +285,22 @@ btnCreateProfile.onclick = async ()=>{
     finished_all:false,
     pinHash:h
   };
-
   saveState();
+  rebuildLocalLeaderboardFromProfiles();
   inputProfile.value = "";
   renderProfiles();
+  renderLeaderboard();
   showModal("Perfil creado correctamente.");
 };
 
 /* ---------- Entrar con PIN ---------- */
 async function promptPinAndEnter(name){
   const p = state.perfiles[name];
-
   let pin = prompt("Ingresa el PIN de este perfil:");
   if(pin===null) return;
-
-  if(!/^\d{4}$/.test(pin)){
-    showModal("PIN inválido.");
-    return;
-  }
-
+  if(!/^\d{4}$/.test(pin)){ showModal("PIN inválido."); return; }
   const check = await hashPin(pin);
-  if(check !== p.pinHash){
-    showModal("PIN incorrecto.");
-    return;
-  }
-
+  if(check !== p.pinHash){ showModal("PIN incorrecto."); return; }
   enterProfile(name);
 }
 
@@ -637,25 +343,13 @@ function renderProfileMenu(name){
   document.getElementById("btnBack").onclick = ()=> showHome();
 
   document.getElementById("btnAny").onclick = ()=>{
-    if(!p.finished_all){
-      showModal("Debes completar todos los niveles primero.");
-      return;
-    }
+    if(!p.finished_all){ showModal("Debes completar todos los niveles primero."); return; }
     let lvl = prompt("Nivel (basico/medio/avanzado):");
     if(!lvl) return;
     lvl = lvl.toLowerCase();
-    if(!["basico","medio","avanzado"].includes(lvl)){
-      showModal("Nivel inválido.");
-      return;
-    }
-    // reset stats
+    if(!["basico","medio","avanzado"].includes(lvl)){ showModal("Nivel inválido."); return; }
     p.nivel = lvl;
-    p.correctas = 0;
-    p.incorrectas = 0;
-    p.tiempo_total = 0;
-    p.total_respuestas = 0;
-    p.idx_pregunta = 0;
-    p.finished_all = false;
+    p.correctas = 0; p.incorrectas = 0; p.tiempo_total = 0; p.total_respuestas = 0; p.idx_pregunta = 0; p.finished_all = false;
     saveState();
     startLevel(name,true);
   };
@@ -666,9 +360,7 @@ function showHome(){
   mainContent.innerHTML = `
     <div class="card fade-in">
       <h2>Bienvenido 👋</h2>
-      <p class="muted">
-        Selecciona o crea un perfil para comenzar.
-      </p>
+      <p class="muted">Selecciona o crea un perfil para comenzar.</p>
     </div>
     <div class="card fade-in" style="margin-top:12px">
       <h3>Ranking local</h3>
@@ -678,7 +370,7 @@ function showHome(){
   renderLeaderboard();
 }
 
-/* ---------- Comenzar nivel ---------- */
+/* ---------- Juego ---------- */
 let session = {};
 
 function startLevel(name, reset){
@@ -686,24 +378,19 @@ function startLevel(name, reset){
     showModal("Preguntas no cargadas.");
     return;
   }
-
   const stats = state.perfiles[name];
   const nivel = stats.nivel;
   session.lista = PREGUNTAS[nivel] ? [...PREGUNTAS[nivel]] : [];
-
   if(reset) stats.idx_pregunta = 0;
-
-  session.idx = stats.idx_pregunta;
+  session.idx = stats.idx_pregunta || 0;
   session.counters = {correctas:0, incorrectas:0, omitidas:0};
   session.timer = null;
-
   renderQuestion(name);
 }
 
 /* ---------- Render Pregunta ---------- */
 function renderQuestion(name){
   clearInterval(session.timer);
-
   const p = session.lista[session.idx];
   if(!p){
     finishLevel(name);
@@ -716,19 +403,15 @@ function renderQuestion(name){
   mainContent.innerHTML = `
     <div class="card fade-in">
       <h3 class="question">${esc(p.pregunta)}</h3>
-
       <div id="opts" class="options"></div>
-
       <div class="controls" style="margin-top:12px; display:flex; gap:8px">
         <button id="btnSkip" class="btn ghost small">⏭ Omitir</button>
         <button id="btnSave" class="btn ghost small">💾 Guardar</button>
         <button id="btnBack" class="btn ghost small">🔙 Volver</button>
       </div>
-
       <div class="timerbar">
         <div id="timerFill" class="timerfill"></div>
       </div>
-
       <p class="muted small">⏱ Tiempo restante: <span id="timeTxt">60</span>s</p>
     </div>
   `;
@@ -748,9 +431,10 @@ function renderQuestion(name){
 
   session.timer = setInterval(()=>{
     session.remaining--;
-    document.getElementById("timeTxt").textContent = session.remaining;
-    document.getElementById("timerFill").style.width = (session.remaining/60*100)+"%";
-
+    const timeTxt = document.getElementById("timeTxt");
+    const timerFill = document.getElementById("timerFill");
+    if(timeTxt) timeTxt.textContent = session.remaining;
+    if(timerFill) timerFill.style.width = (session.remaining/60*100) + "%";
     if(session.remaining <= 0){
       clearInterval(session.timer);
       sndTime.play();
@@ -759,36 +443,47 @@ function renderQuestion(name){
   },1000);
 }
 
-/* ---------- Responder ---------- */
-function answer(name,op,btnEl){
+/* ---------- Responder: SIN modal de correcto/incorrecto,
+   sólo colores y sonido. Espera 5s antes de siguiente. ---------- */
+function answer(name, op, btnEl){
   clearInterval(session.timer);
 
   const p = session.lista[session.idx];
   const stats = state.perfiles[name];
   const t = (Date.now() - session.startTime)/1000;
-
   stats.tiempo_total += t;
   stats.total_respuestas++;
+
+  // Deshabilitar todas las opciones para evitar clicks adicionales
+  const allButtons = Array.from(document.querySelectorAll(".option-btn"));
+  allButtons.forEach(b=> b.disabled = true);
 
   if(op === p.respuesta){
     sndCorrect.play();
     btnEl.classList.add("correct");
     session.counters.correctas++;
     stats.correctas++;
-    showModal("✔ ¡Correcto!");
+    // NO modal aquí (usuario pidió eliminar alerta correcta/incorrecta)
   } else {
     sndWrong.play();
     btnEl.classList.add("wrong");
     session.counters.incorrectas++;
     stats.incorrectas++;
-    showModal("✖ Incorrecto.");
+    // NO modal aquí
+    // opcional: marcar la respuesta correcta visualmente
+    const correctBtn = allButtons.find(b => b.textContent.includes(p.respuesta));
+    if(correctBtn) correctBtn.classList.add("correct");
   }
 
   session.idx++;
   stats.idx_pregunta = session.idx;
   saveState();
 
-  setTimeout(()=> renderQuestion(name), 300);
+  // Esperar 5 segundos antes de siguiente pregunta
+  setTimeout(()=> {
+    // NOTA: si el usuario ha terminado todas las preguntas, renderQuestion lo detectará
+    renderQuestion(name);
+  }, 5000);
 }
 
 /* ---------- Omitir ---------- */
@@ -808,7 +503,6 @@ function timeOut(name){
   stats.total_respuestas++;
   stats.incorrectas++;
   session.counters.incorrectas++;
-
   session.idx++;
   stats.idx_pregunta = session.idx;
   saveState();
@@ -832,8 +526,6 @@ function finishLevel(name){
     <strong>Puntaje:</strong> ${score.toFixed(2)}%
   `;
 
-  const levels = ["basico","medio","avanzado"];
-
   if(score >= 80){
     msg += "<br><br>🎉 ¡Aprobaste!";
     if(stats.nivel === "basico") stats.nivel="medio";
@@ -845,16 +537,16 @@ function finishLevel(name){
   }
 
   saveState();
+  // Actualiza leaderboard local y lo muestra
   updateLeaderboard(name, stats.tiempo_total);
+  rebuildLocalLeaderboardFromProfiles();
 
-  /* ========== NUEVA LÍNEA: guardar en ranking global ========== */
+  // Guardar en Ranking global (no bloqueante)
   try {
-    // llamar la función para guardar en Firestore (no bloqueante)
     guardarEnRankingGlobal(name, stats.tiempo_total, stats.correctas, stats.incorrectas);
-  } catch(e) {
+  } catch(e){
     console.warn("No se pudo guardar en ranking global:", e);
   }
-  /* ========================================================== */
 
   showModal(msg);
   renderProfiles();
@@ -872,6 +564,11 @@ function updateLeaderboard(name, tiempo){
 }
 
 function renderLeaderboard(){
+  // Si no hay items en leaderboard, tratar de reconstruir desde perfiles
+  if(!leaderboard || leaderboard.length===0){
+    rebuildLocalLeaderboardFromProfiles();
+  }
+
   leaderboardEl.innerHTML = "";
   if(leaderboard.length===0){
     leaderboardEl.innerHTML = "<div class='muted small'>Sin datos aún.</div>";
@@ -889,25 +586,7 @@ function renderLeaderboard(){
   });
 }
 
-/* ---------- Exportar / Importar ranking ---------- */
-/* Eliminados según lo solicitado. */
-
-/* ---------- Tema ---------- */
-themeToggle.onchange = ()=> {
-  if(themeToggle.checked) document.documentElement.classList.add("light");
-  else document.documentElement.classList.remove("light");
-};
-
-/* ---------- Inicial ---------- */
-renderProfiles();
-renderLeaderboard();
-
-/* =========================
-   RANKING GLOBAL: FUNCIONES PARA LEER Y MOSTRAR
-   (Se usa la misma instancia `db` ya inicializada arriba)
-   ========================= */
-
-/* Cargar ranking global (top 30 ordenado por tiempo ascendente) */
+/* ---------- Ranking global: lectura (top 30 asc por tiempo) ---------- */
 async function cargarRankingGlobal() {
   try {
     const snap = await db.collection("ranking")
@@ -933,7 +612,6 @@ async function cargarRankingGlobal() {
       posicion++;
     });
 
-    // Mostrar dentro del modal bonito (sin botón cancelar)
     modalMessage.innerHTML = `
       <strong>🌍 Ranking global</strong>
       <div style="margin-top:12px; max-height:300px; overflow-y:auto;">
@@ -949,11 +627,18 @@ async function cargarRankingGlobal() {
     showModal("❌ No se pudo cargar el ranking global.");
   }
 }
-
-/* Conectar botón Ranking global */
 btnGlobalRank.onclick = cargarRankingGlobal;
 
-</script>
+/* ---------- Tema ---------- */
+themeToggle.onchange = ()=> {
+  if(themeToggle.checked) document.documentElement.classList.add("light");
+  else document.documentElement.classList.remove("light");
+};
 
+/* ---------- Inicial ---------- */
+rebuildLocalLeaderboardFromProfiles();
+renderProfiles();
+renderLeaderboard();
+</script>
 </body>
 </html>
