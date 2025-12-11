@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Quiz Inglés</title>
 
-<!-- CSS llegará en la PARTE 2 -->
 <style>
 :root {
   --bg:#071226;
@@ -335,8 +334,6 @@ header {
 </head>
 <body>
 <div class="app">
-
-  <!-- HEADER -->
   <header class="fade-in">
     <div class="brand">
       <h1>Quiz Inglés </h1>
@@ -348,19 +345,16 @@ header {
     </div>
   </header>
 
-  <!-- SIDEBAR PERFILES -->
   <aside class="profiles-panel slide-up">
     <h2>Perfiles</h2>
 
     <div id="profilesList" class="profiles-list"></div>
 
-    <!-- Crear perfil -->
     <div class="create-row">
       <input id="inputProfile" placeholder="Nombre del jugador">
       <button id="btnCreateProfile" class="btn accent">➕ Crear</button>
     </div>
 
-    <!-- Ranking local export/import (REEMPLAZADO por Ranking global) -->
     <div class="rank-tools">
       <button id="btnGlobalRank" class="btn accent small">🌍 Ranking global</button>
     </div>
@@ -370,7 +364,6 @@ header {
     </div>
   </aside>
 
-  <!-- PANEL PRINCIPAL -->
   <main class="main-panel slide-up" id="mainPanel">
     <div id="mainContent">
       <div class="card fade-in">
@@ -390,7 +383,6 @@ header {
 
 </div>
 
-<!-- =============== MODAL CUSTOM =============== -->
 <div id="modalOverlay" class="modal-overlay hidden">
   <div class="modal-window scale-in" id="modalWindow">
     <div id="modalMessage" class="modal-message"></div>
@@ -401,11 +393,9 @@ header {
   </div>
 </div>
 
-<!-- =============== AUDIO SONIDOS =============== -->
 <audio id="sndCorrect"></audio>
 <audio id="sndWrong"></audio>
 <audio id="sndTime"></audio>
-<!-- Firebase App + Firestore -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
@@ -423,7 +413,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 </script>
 
-<!-- JS COMPLETO VIENE EN PARTE 3 -->
 <script>
 async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
   try {
