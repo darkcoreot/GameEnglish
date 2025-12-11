@@ -428,7 +428,6 @@ const db = firebase.firestore();
 
 <!-- JS COMPLETO VIENE EN PARTE 3 -->
 <script>
-/* ========== FUNCION: guardarEnRankingGlobal (ya existente, la mantengo) ========== */
 async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
   try {
     await db.collection("ranking").add({
