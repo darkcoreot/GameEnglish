@@ -148,21 +148,23 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* ---------- Función para guardar en Firestore (ranking global) ---------- */
+/* ---------- Función para guardar o actualizar en Firestore (ranking global) ---------- */
 async function guardarEnRankingGlobal(nombre, tiempo_total, correctas, incorrectas) {
   try {
-    await db.collection("ranking").add({
+    await db.collection("ranking").doc(nombre).set({
       nombre: nombre,
       tiempo_total: Number(tiempo_total) || 0,
       correctas: Number(correctas) || 0,
       incorrectas: Number(incorrectas) || 0,
       fecha: Date.now()
-    });
-    console.log("✔ Puntaje guardado en ranking global");
+    }, { merge: true });
+
+    console.log("✔ Puntaje guardado/actualizado en ranking global");
   } catch (error) {
     console.error("❌ Error guardando ranking:", error);
   }
 }
+
 
 /* Sonidos (simples placeholders) */
 const sndCorrect = document.getElementById("sndCorrect");
@@ -587,12 +589,12 @@ function renderLeaderboard(){
 }
 
 /* ---------- Ranking global: lectura (top 30 asc por tiempo) ---------- */
-async function cargarRankingGlobal() {
-  try {
-    const snap = await db.collection("ranking")
-      .orderBy("tiempo_total", "asc")
-      .limit(30)
-      .get();
+function cargarRankingGlobal() {
+  const ref = db.collection("ranking")
+    .orderBy("tiempo_total", "asc")
+    .limit(30);
+
+  ref.onSnapshot((snap) => {
 
     if (snap.empty) {
       showModal("🌍<br>No hay datos en el ranking global.");
@@ -611,8 +613,7 @@ async function cargarRankingGlobal() {
             <div>${formatNum(d.tiempo_total || 0)}s</div>
             <div class="muted small">✔ ${d.correctas || 0} ✖ ${d.incorrectas || 0}</div>
           </div>
-        </div>
-      `;
+        </div>`;
       pos++;
     });
 
@@ -627,11 +628,12 @@ async function cargarRankingGlobal() {
     modalOverlay.classList.remove("hidden");
     modalOk.onclick = () => modalOverlay.classList.add("hidden");
 
-  } catch (e) {
-    console.error("Error cargando ranking global:", e);
+  }, (err) => {
+    console.error("Error en listener:", err);
     showModal("❌ No se pudo cargar el ranking global.");
-  }
+  });
 }
+
 btnGlobalRank.onclick = cargarRankingGlobal;
 
 /* ---------- Tema ---------- */
