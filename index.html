@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quiz Inglés – Renovado (Hosting)</title>
+<meta name="description" content="Quiz de Inglés didáctico — cronómetro 60s por pregunta, perfiles, estadísticas y niveles.">
+<style>
+  /* --------------------------
+     Theme / Layout
+     -------------------------- */
+  :root{
+    --bg:#071226;
+    --panel:#0f1724;
+    --card:#0b1220;
+    --fg:#e6eef8;
+    --muted:#9aa7bf;
+    --accent:#3b82f6;
+    --good:#10b981;
+    --danger:#ef4444;
+    --glass: rgba(255,255,255,0.02);
+  }
+  .light{
+    --bg:#f3f6fb;
+    --panel:#ffffff;
+    --card:#ffffff;
+    --fg:#0b1220;
+    --muted:#4b5563;
+    --accent:#2563eb;
+    --good:#059669;
+    --danger:#dc2626;
+    --glass: rgba(0,0,0,0.03);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif}
+  body{
+    background: linear-gradient(180deg,var(--bg), #021225 130%);
+    color:var(--fg);
+    display:flex; align-items:center; justify-content:center;
+    padding:18px;
+  }
+  .app{
+    width:100%; max-width:1150px; border-radius:14px; overflow:hidden;
+    box-shadow: 0 20px 50px rgba(2,6,23,0.6);
+    display:grid; grid-template-columns:320px 1fr; gap:18px; padding:18px;
+    background: linear-gradient(180deg,var(--panel), rgba(0,0,0,0.02));
+  }
+
+  header{ grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; margin-bottom:6px }
+  header h1{ margin:0; font-size:20px; letter-spacing:0.2px }
+  .brand-sub{ font-size:13px; color:var(--muted) }
+
+  /* Left (profiles) */
+  .profiles-panel{ background:var(--card); padding:14px; border-radius:10px; min-height:380px }
+  .profiles-panel h2{ margin:0 0 12px 0 }
+  .profiles-list{ display:flex; flex-direction:column; gap:8px; max-height:380px; overflow:auto; padding-right:6px }
+
+  .profile-btn{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 10px; border-radius:8px;
+                background:transparent; color:var(--fg); border:1px solid rgba(255,255,255,0.02); cursor:pointer; text-align:left }
+  .profile-btn:hover{ background:rgba(255,255,255,0.02) }
+
+  .create-row{ display:flex; gap:8px; margin-top:12px }
+  .create-row input{ flex:1; padding:8px; border-radius:8px; border:0; background:transparent; color:var(--fg); outline:1px solid rgba(255,255,255,0.02) }
+  .btn{ padding:8px 12px; border-radius:8px; border:0; cursor:pointer; background:transparent; color:var(--fg) }
+  .btn.accent{ background:var(--accent); color:white; box-shadow:0 8px 20px rgba(59,130,246,0.12) }
+  .btn.ghost{ border:1px solid rgba(255,255,255,0.04) }
+
+  /* Right (main) */
+  .main-panel{ background:var(--card); padding:18px; border-radius:10px; min-height:420px; overflow:auto }
+  .muted{ color:var(--muted) }
+
+  .stat-row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+  .stat-pill{ background:var(--glass); padding:8px 10px; border-radius:10px; font-weight:700 }
+
+  .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:12px; border-radius:10px }
+
+  .question{ font-size:18px; margin:8px 0 14px 0 }
+  .options{ display:flex; flex-direction:column; gap:10px }
+  .option-btn{ padding:12px; border-radius:10px; border:0; background:transparent; color:var(--fg); text-align:left; cursor:pointer; font-size:15px }
+  .option-btn:hover{ transform:translateY(-3px); transition:all .12s }
+  .timerbar{ height:10px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden; margin-top:12px }
+  .timerfill{ height:100%; width:100%; background: linear-gradient(90deg,var(--accent), #60a5fa); transition:width 1s linear }
+
+  .controls{ margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+  .small{ font-size:13px }
+
+  /* Flash feedback */
+  .flash-good{ box-shadow:0 0 20px rgba(16,185,129,0.12); transition: box-shadow .25s }
+  .flash-bad{ box-shadow:0 0 20px rgba(239,68,68,0.12); transition: box-shadow .25s }
+
+  /* Responsive */
+  @media(max-width:920px){
+    .app{ grid-template-columns:1fr; padding:12px }
+    .profiles-panel{ order:2 }
+    .main-panel{ order:1 }
+  }
+
+  /* Modal (lightweight) */
+  .modal-back{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); z-index:60 }
+  .modal{ background:var(--card); padding:18px; border-radius:10px; max-width:720px; width:90%; color:var(--fg) }
+  .modal h3{ margin-top:0 }
+
+  /* small details */
+  .level-pill{ background:var(--glass); padding:6px 8px; border-radius:999px; font-weight:700 }
+  .right-icons{ display:flex; gap:8px; align-items:center }
+  .icon-pill{ background:var(--glass); padding:6px 8px; border-radius:8px; font-weight:700 }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <header>
+    <div>
+      <h1>Quiz Inglés – Renovado</h1>
+      <div class="brand-sub muted">Didáctico • Responsive • Cronómetro 60s • Modo oscuro</div>
+    </div>
+    <div class="right-icons">
+      <label class="muted small">Tema claro</label>
+      <input id="themeToggle" type="checkbox" />
+      <label class="muted small" style="margin-left:12px">Cargar preguntas:</label>
+      <button id="btnLoadFile" class="btn ghost small" title="Cargar preguntas desde archivo (solo si fetch falla)">📂</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none" />
+    </div>
+  </header>
+
+  <!-- LEFT: Perfiles -->
+  <aside class="profiles-panel">
+    <h2>Perfiles</h2>
+    <div id="profilesList" class="profiles-list" aria-live="polite"></div>
+
+    <div class="create-row">
+      <input id="inputProfile" placeholder="Nombre del jugador" />
+      <button id="btnCreateProfile" class="btn accent">➕ Crear</button>
+    </div>
+
+    <div style="margin-top:12px" class="muted small">Los perfiles y progreso se guardan en tu navegador (localStorage). Para hosting, sube también <code>preguntas.json</code> al mismo directorio.</div>
+  </aside>
+
+  <!-- RIGHT: Main -->
+  <main class="main-panel">
+    <div id="mainContent">
+      <div class="card">
+        <h2>Bienvenido</h2>
+        <p class="muted">Crea un perfil o selecciónalo para ver estadísticas y comenzar.</p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Light modal container (hidden by default) -->
+<div id="modalRoot" style="display:none;"></div>
+
+<script>
+/* ===========================
+   QUIZ.HTML - Single-file app
+   - Carga preguntas por fetch('preguntas.json')
+   - Fallback: carga manual con input file
+   - Perfiles en localStorage
+   - Cronómetro 60s por pregunta
+   - Correctas/Incorrectas/Omitidas, alertas y botones
+   =========================== */
+
+(() => {
+  // ---------- Config / Estado ----------
+  const STORAGE_KEY = "quiz_ingles_hosting_v1";
+  let PREGUNTAS = null;
+  let preguntasCargadas = false;
+
+  let state = {
+    perfiles: {},   // estructura: nombre -> {nivel, correctas, incorrectas, tiempo_total, total_respuestas, idx_pregunta, finished_all}
+    usuario: null,
+    listaPreguntas: [],
+    idxPregunta: 0,
+    tiempoInicio: 0,
+    tiempoRestante: 60,
+    timerId: null,
+    session: { correctas:0, incorrectas:0, omitidas:0 }
+  };
+
+  // ---------- DOM refs ----------
+  const el = (id) => document.getElementById(id);
+  const profilesList = el('profilesList');
+  const inputProfile = el('inputProfile');
+  const btnCreateProfile = el('btnCreateProfile');
+  const mainContent = el('mainContent');
+  const themeToggle = el('themeToggle');
+  const fileInput = el('fileInput');
+  const btnLoadFile = el('btnLoadFile');
+  const modalRoot = el('modalRoot');
+
+  // ---------- Load/Save ----------
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw) state.perfiles = JSON.parse(raw).perfiles || {};
+      else state.perfiles = {};
+    }catch(e){
+      console.warn("Error leyendo storage:", e);
+      state.perfiles = {};
+    }
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({perfiles: state.perfiles})); }
+    catch(e){ console.warn("Error guardando storage:", e); }
+  }
+
+  // Initialize
+  loadState();
+
+  // ---------- Fetch preguntas.json ----------
+  function fetchPreguntas(){
+    // attempt to fetch preguntas.json (this works on hosting over http(s))
+    fetch("preguntas.json", {cache:"no-store"})
+      .then(r => {
+        if(!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(j => {
+        PREGUNTAS = j;
+        preguntasCargadas = true;
+        console.log("Preguntas cargadas desde preguntas.json");
+        // Re-render profile menu if user is in menu
+        if(state.usuario) renderPerfilMenu(state.usuario);
+      })
+      .catch(err => {
+        preguntasCargadas = false;
+        console.warn("No se cargó preguntas.json automáticamente (esto es normal en file://).", err);
+        // leave PREGUNTAS null, user can load manually
+        btnLoadFile.title = "Click para seleccionar preguntas.json manualmente";
+      });
+  }
+  fetchPreguntas();
+
+  // ---------- File input fallback ----------
+  btnLoadFile.addEventListener("click", ()=> fileInput.click());
+  fileInput.addEventListener("change", (ev) => {
+    const f = ev.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try{
+        const obj = JSON.parse(e.target.result);
+        PREGUNTAS = obj;
+        preguntasCargadas = true;
+        alert("Preguntas cargadas correctamente desde archivo.");
+        if(state.usuario) renderPerfilMenu(state.usuario);
+      }catch(ex){
+        alert("Error leyendo JSON: " + ex.message);
+      }
+    };
+    reader.readAsText(f, "utf-8");
+  });
+
+  // ---------- Helpers ----------
+  function ensurePerfil(nombre){
+    if(!state.perfiles[nombre]){
+      state.perfiles[nombre] = {
+        nivel: "basico",
+        correctas: 0,
+        incorrectas: 0,
+        tiempo_total: 0,
+        total_respuestas: 0,
+        idx_pregunta: 0,
+        finished_all: false
+      };
+      saveState();
+    }
+  }
+
+  function clearTimer(){
+    if(state.timerId) { clearInterval(state.timerId); state.timerId = null; }
+  }
+
+  function format(n){ return Number(n).toFixed(2); }
+
+  // ---------- Render profiles list ----------
+  function renderProfilesList(){
+    profilesList.innerHTML = "";
+    const keys = Object.keys(state.perfiles).sort((a,b) => a.localeCompare(b));
+    if(keys.length === 0){
+      profilesList.innerHTML = '<div class="muted">No hay perfiles. Crea uno nuevo.</div>';
+      return;
+    }
+    keys.forEach(name => {
+      const p = state.perfiles[name];
+      const btn = document.createElement("button");
+      btn.className = "profile-btn";
+      btn.innerHTML = `<div style="text-align:left"><strong>${escapeHtml(name)}</strong><div class="muted small">${p.nivel.toUpperCase()}</div></div>
+                       <div style="text-align:right"><div class="muted small">✔ ${p.correctas}</div><div class="muted small">✖ ${p.incorrectas}</div></div>`;
+      btn.addEventListener("click", ()=> seleccionarPerfil(name));
+      profilesList.appendChild(btn);
+    });
+  }
+
+  // ---------- Create profile ----------
+  btnCreateProfile.addEventListener("click", ()=>{
+    const name = (inputProfile.value || "").trim();
+    if(!name) return alert("Ingresa un nombre válido.");
+    if(state.perfiles[name]) return alert("Ese perfil ya existe.");
+    ensurePerfil(name);
+    inputProfile.value = "";
+    renderProfilesList();
+    seleccionarPerfil(name);
+  });
+
+  // ---------- Select profile & render menu ----------
+  function seleccionarPerfil(nombre){
+    state.usuario = nombre;
+    ensurePerfil(nombre);
+    renderPerfilMenu(nombre);
+  }
+
+  function renderPerfilMenu(nombre){
+    const stats = state.perfiles[nombre];
+    const nivel_actual = stats.nivel;
+    const preguntasNivel = (PREGUNTAS && PREGUNTAS[nivel_actual]) ? PREGUNTAS[nivel_actual] : [];
+    const tiempo_prom = stats.total_respuestas ? (stats.tiempo_total / stats.total_respuestas).toFixed(2) : "0.00";
+
+    mainContent.innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <h2>${escapeHtml(nombre)}</h2>
+            <div class="muted">Nivel actual: ${nivel_actual.toUpperCase()}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="stat-pill">✔ ${stats.correctas}</div>
+            <div style="height:8px"></div>
+            <div class="stat-pill">✖ ${stats.incorrectas}</div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+
+        <p class="muted">📊 Estadísticas</p>
+        <p>Tiempo total: ${format(stats.tiempo_total)} s<br>Promedio por pregunta: ${format(tiempo_prom)} s</p>
+
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button id="btnContinue" class="btn accent small">▶ Continuar</button>
+          <button id="btnNewGame" class="btn small">🔁 Nuevo juego</button>
+          <button id="btnAnyLevel" class="btn small" ${stats.finished_all ? "" : "disabled"}>⭐ Nivel libre</button>
+          <button id="btnBack" class="btn small ghost">🔙 Volver</button>
+        </div>
+
+        <div style="margin-top:10px" class="muted small">Posición actual en nivel: ${stats.idx_pregunta}/${preguntasNivel.length}</div>
+      </div>
+    `;
+
+    el('btnBack').addEventListener('click', ()=> { state.usuario = null; mainContent.innerHTML = '<div class="card"><h2>Bienvenido</h2><p class="muted">Selecciona un perfil para comenzar.</p></div>'; });
+    el('btnNewGame').addEventListener('click', ()=> iniciarNivel(true));
+    el('btnContinue').addEventListener('click', ()=> iniciarNivel(false));
+    el('btnAnyLevel').addEventListener('click', ()=> {
+      if(!state.perfiles[state.usuario].finished_all){ alert("Debes completar los 3 niveles para habilitar esto."); return; }
+      elegirNivelLibre();
+    });
+  }
+
+  // ---------- Iniciar / continuar nivel ----------
+  function iniciarNivel(reset=false, nivel_override=null){
+    if(!PREGUNTAS || !preguntasCargadas){
+      // it's ok if hosting, but if not loaded we warn and require manual load
+      if(!PREGUNTAS){
+        alert("No se encontraron preguntas cargadas. Si estás en local (file://) usa el botón 📂 para cargar preguntas.json, o sube el juego a un hosting y sube preguntas.json al mismo directorio.");
+        return;
+      }
+    }
+    const stats = state.perfiles[state.usuario];
+    const nivel = nivel_override || stats.nivel;
+    state.listaPreguntas = PREGUNTAS[nivel] ? [...PREGUNTAS[nivel]] : [];
+    if(reset){
+      stats.idx_pregunta = 0;
+      saveState();
+    }
+    state.idxPregunta = stats.idx_pregunta || 0;
+    state.session = { correctas:0, incorrectas:0, omitidas:0 };
+    mostrarPregunta();
+  }
+
+  // ---------- Mostrar pregunta ----------
+  function mostrarPregunta(){
+    clearTimer();
+    const list = state.listaPreguntas;
+    if(!list || list.length === 0){
+      // If no questions: show message
+      mainContent.innerHTML = `<div class="card"><h3>No hay preguntas en este nivel</h3><p class="muted">Asegúrate de que preguntas.json tiene preguntas para este nivel.</p><button class="btn small" id="backToMenu">Volver</button></div>`;
+      el('backToMenu').addEventListener('click', ()=> renderPerfilMenu(state.usuario));
+      return;
+    }
+
+    if(state.idxPregunta >= list.length){
+      finalizarNivel();
+      return;
+    }
+
+    const p = list[state.idxPregunta];
+    state.tiempoRestante = 60;
+    state.tiempoInicio = Date.now();
+
+    mainContent.innerHTML = `
+      <div id="playCard" class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div class="muted">Pregunta ${state.idxPregunta + 1} / ${list.length}</div>
+            <h3 style="margin:8px 0">${escapeHtml(p.pregunta)}</h3>
+          </div>
+          <div style="text-align:right">
+            <div class="level-pill">${state.perfiles[state.usuario].nivel.toUpperCase()}</div>
+            <div style="height:8px"></div>
+            <div class="muted small">⏱ <span id="timeTxt">60</span>s</div>
+            <div style="height:8px"></div>
+            <div>✔ <span id="uiCorrect">${state.perfiles[state.usuario].correctas}</span> &nbsp; ✖ <span id="uiIncorrect">${state.perfiles[state.usuario].incorrectas}</span></div>
+          </div>
+        </div>
+
+        <div id="opts" class="options" style="margin-top:12px"></div>
+
+        <div class="controls">
+          <button id="btnSkip" class="btn ghost small">⏭ Omitir</button>
+          <button id="btnSave" class="btn ghost small">💾 Guardar progreso</button>
+          <button id="btnBackProfile" class="btn ghost small">🔙 Volver al perfil</button>
+        </div>
+
+        <div class="timerbar"><div id="timerFill" class="timerfill" style="width:100%"></div></div>
+      </div>
+    `;
+
+    const opts = el('opts');
+    p.opciones.forEach((opt, i) => {
+      const b = document.createElement('button');
+      b.className = 'option-btn';
+      b.textContent = `${String.fromCharCode(65+i)}. ${opt}`;
+      b.addEventListener('click', ()=> responder(opt, b));
+      opts.appendChild(b);
+    });
+
+    el('btnSkip').addEventListener('click', omitir);
+    el('btnSave').addEventListener('click', ()=> { saveState(); alert('Progreso guardado.'); });
+    el('btnBackProfile').addEventListener('click', ()=> { clearTimer(); renderPerfilMenu(state.usuario); });
+
+    // start timer
+    state.timerId = setInterval(()=>{
+      state.tiempoRestante--;
+      const fill = el('timerFill');
+      const txt = el('timeTxt');
+      if(fill) fill.style.width = (state.tiempoRestante / 60 * 100) + '%';
+      if(txt) txt.textContent = state.tiempoRestante;
+      if(state.tiempoRestante <= 0){
+        clearTimer();
+        alert('⏳ Tiempo agotado. Cuenta como incorrecta.');
+        marcarIncorrectaPorTimeout();
+      }
+    }, 1000);
+  }
+
+  // ---------- Responder / marcar ----------
+  function responder(opcion, btnEl){
+    clearTimer();
+    const p = state.listaPreguntas[state.idxPregunta];
+    const timeSec = (Date.now() - state.tiempoInicio) / 1000;
+    const stats = state.perfiles[state.usuario];
+
+    stats.tiempo_total = (stats.tiempo_total || 0) + timeSec;
+    stats.total_respuestas = (stats.total_respuestas || 0) + 1;
+
+    if(opcion === p.respuesta){
+      state.session.correctas++;
+      stats.correctas = (stats.correctas || 0) + 1;
+      // feedback
+      alert('✔ ¡Correcto!');
+      flash('good', btnEl);
+    } else {
+      state.session.incorrectas++;
+      stats.incorrectas = (stats.incorrectas || 0) + 1;
+      alert('✖ Incorrecto.');
+      flash('bad', btnEl);
+    }
+
+    // update UI counters quickly
+    const uiC = el('uiCorrect'), uiI = el('uiIncorrect');
+    if(uiC) uiC.textContent = stats.correctas;
+    if(uiI) uiI.textContent = stats.incorrectas;
+
+    state.idxPregunta++;
+    stats.idx_pregunta = state.idxPregunta;
+    saveState();
+
+    // small pause for UX
+    setTimeout(()=> mostrarPregunta(), 500);
+  }
+
+  function omitir(){
+    clearTimer();
+    state.session.omitidas++;
+    state.idxPregunta++;
+    state.perfiles[state.usuario].idx_pregunta = state.idxPregunta;
+    saveState();
+    mostrarPregunta();
+  }
+
+  function marcarIncorrectaPorTimeout(){
+    const stats = state.perfiles[state.usuario];
+    stats.tiempo_total = (stats.tiempo_total || 0) + 60;
+    stats.total_respuestas = (stats.total_respuestas || 0) + 1;
+    stats.incorrectas = (stats.incorrectas || 0) + 1;
+    state.session.incorrectas++;
+    state.idxPregunta++;
+    stats.idx_pregunta = state.idxPregunta;
+    saveState();
+    const card = el('playCard');
+    if(card) { card.classList.add('flash-bad'); setTimeout(()=> card.classList.remove('flash-bad'), 700); }
+    setTimeout(()=> mostrarPregunta(), 600);
+  }
+
+  // ---------- Finalizar nivel ----------
+  function finalizarNivel(){
+    clearTimer();
+    const total = state.listaPreguntas.length || 1;
+    const score = (state.session.correctas / total) * 100;
+    const stats = state.perfiles[state.usuario];
+
+    let mensaje = `Correctas: ${state.session.correctas}\nIncorrectas: ${state.session.incorrectas}\nOmitidas: ${state.session.omitidas}\n\nPuntaje: ${score.toFixed(2)}%`;
+
+    const niveles = ['basico','medio','avanzado'];
+    const idxNivel = niveles.indexOf(stats.nivel);
+
+    if(score >= 80){
+      mensaje += '\n\n🎉 ¡Aprobaste!';
+      if(stats.nivel === 'basico') stats.nivel = 'medio';
+      else if(stats.nivel === 'medio') stats.nivel = 'avanzado';
+      else if(stats.nivel === 'avanzado') stats.finished_all = true;
+      stats.idx_pregunta = 0;
+    } else {
+      mensaje += '\n\n🔁 No alcanzaste el 80%. Debes repetir el nivel.';
+    }
+
+    saveState();
+    alert(mensaje);
+
+    // After finishing, show profile menu again and re-render profiles list
+    renderProfilesList();
+    renderPerfilMenu(state.usuario);
+  }
+
+  // ---------- Elegir nivel libre ----------
+  function elegirNivelLibre(){
+    const nivel = prompt('En qué nivel quieres comenzar? (basico / medio / avanzado)');
+    if(!nivel) return;
+    if(!['basico','medio','avanzado'].includes(nivel)) return alert('Nivel inválido.');
+    const stats = state.perfiles[state.usuario];
+    if(!stats.finished_all) return alert('Debes completar los 3 niveles para habilitar esto.');
+    if(!confirm(`Se reiniciarán estadísticas y comenzarás en ${nivel.toUpperCase()}. ¿Confirmas?`)) return;
+    stats.nivel = nivel;
+    stats.correctas = 0; stats.incorrectas = 0; stats.tiempo_total = 0; stats.total_respuestas = 0; stats.idx_pregunta = 0; stats.finished_all = false;
+    saveState();
+    iniciarNivel(true, nivel);
+  }
+
+  // ---------- Visual helpers ----------
+  function flash(type, elBtn){
+    const target = el('playCard') || document.body;
+    if(type === 'good'){
+      if(elBtn) elBtn.classList.add('flash-good');
+      target.classList.add('flash-good');
+      setTimeout(()=>{ if(elBtn) elBtn.classList.remove('flash-good'); target.classList.remove('flash-good'); }, 600);
+    } else {
+      if(elBtn) elBtn.classList.add('flash-bad');
+      target.classList.add('flash-bad');
+      setTimeout(()=>{ if(elBtn) elBtn.classList.remove('flash-bad'); target.classList.remove('flash-bad'); }, 600);
+    }
+  }
+
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // ---------- Theme toggle ----------
+  themeToggle.addEventListener('change', (e) => {
+    if(e.target.checked) document.documentElement.classList.add('light');
+    else document.documentElement.classList.remove('light');
+  });
+
+  // ---------- Initial rendering ----------
+  renderProfilesList();
+
+  // If a single profile exists, auto-select first (optional)
+  // const keys = Object.keys(state.perfiles); if(keys.length === 1) seleccionarPerfil(keys[0]);
+
+  // Expose some functions to console for debugging (optional)
+  window.__QUIZ = {
+    state, renderProfilesList, fetchPreguntas, saveState, loadState
+  };
+})();
+</script>
+</body>
+</html>
